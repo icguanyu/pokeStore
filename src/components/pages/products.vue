@@ -1,8 +1,8 @@
 <template>
   <div>
     <loading v-if="isLoading"></loading>
-    <div class="products">
-      <p class="class_titel">商品分類</p>
+    <p class="categories_titel">商品分類</p>
+    <div class="categories">
       <div class="items">
         <div class="item">
           <img src="../../assets/img/products/1.png" alt="">
@@ -26,21 +26,56 @@
         </div>
       </div>
     </div>
+    <p class="categories_titel">精選商品</p>
+    <div class="products_list">
+      <!-- swiper -->
+      <swiper :options="swiperOption">
+        <swiper-slide v-for="product in products" :key="product.id">
+          <div class="categories">{{ product.category }}</div>
+          <img :src="product.imageUrl" alt="">
+          <div class="title">{{ product.title }}</div>
+          <p class="intro">{{ product.description }}</p>
+          <div class="price">
+            <div class="onsale_price">NT${{product.price}}元</div>
+            <div class="ori_price">原價{{ product.origin_price }}元</div>
+          </div>
+          <div class="more">
+            <div class="read_more">詳細內容</div>
+            <div class="add_cart">加入購物車</div>
+          </div>
+        </swiper-slide>
+        <div class="swiper-pagination" slot="pagination"></div>
+      </swiper>
+    </div>
   </div>
 </template>
 
 <script>
+
 import $ from "jquery";
+import "swiper/dist/css/swiper.css"; // require styles
+import { swiper, swiperSlide } from "vue-awesome-swiper";
+
+
 import loading from "@/components/loading";
+
 export default {
   name: "products",
   data() {
     return {
+      swiperOption: {
+        slidesPerView: 4,
+        spaceBetween: 10,
+        pagination: {
+          el: '.swiper-pagination',
+          clickable: true
+        }
+      },
       isLoading: false,
       products: [],
       pagination:{},
       tempProduct: {},
-    };
+    }
   },
   methods:{
     getPorducts(page = 1) {
@@ -58,22 +93,93 @@ export default {
   created(){
     this.getPorducts()
   },
+  computed:{
+    starProduct(){
+      const vm = this
+      return vm.products.filter((item)=>{
+        return item.category === '2017'
+      })
+    }
+  },
   components: {
-    loading
+    loading,
+    swiper,
+    swiperSlide
   }
 };
 </script>
 
 <style lang="scss" scoped>
-.products{
-  margin: 10px 0;
-  .class_titel{
-    position: relative;
-    font-size: 20px;
-    font-weight: 600;
-    color: #53acac;
+.swiper-container {
+  max-width: 1080px;
+  width: 100%;
+  height: 340px;
+}
+.swiper-slide{
+  border: 1px solid #ddd;
+  position: relative;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  padding: 5px 15px;
+  box-sizing: border-box;
+  .categories{
+    background: #ff4c4c;
+    font-size: 1px;
+    display: inline-block;
+    color: #fff;
+    position: absolute;
+    top: 0;
+    margin: 0;
+    right: 0;
+    padding: 3px 5px;
+    border-radius: 5px;
+    border: 2px solid #fff;
+  }
+  img{
+    max-width: 140px;
+    max-height: 140px;
     padding: 10px;
   }
+  .title{
+    font-size: 18px;
+    align-self: flex-start;
+  }
+  .intro{
+    align-self: flex-start;
+    font-weight: 400;
+    color: #666;
+    font-size: 14px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #ccc;
+  }
+  .price{
+    font-weight: normal;
+    width: 100%;
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    .onsale_price{
+      font-size: 16px;
+      letter-spacing: 1px;
+      color: #48a38e;
+      font-weight: 600;
+    }
+    .ori_price{
+      font-size: 12px;
+      color: #888;
+    }
+  }
+}
+.categories_titel{
+  position: relative;
+  font-size: 20px;
+  font-weight: 600;
+  color: #53acac;
+  padding: 10px;
+}
+.categories{
+  margin: 10px 0;
   .items{
     display: flex;
     flex-wrap: wrap;
@@ -104,5 +210,29 @@ export default {
       }
     }
   }
+}
+.more{
+  width: 100%;
+  
+  display: flex;
+  margin-top: 10px;
+  justify-content: space-around;
+  .read_more,.add_cart{
+    flex:1;
+    text-align: center;
+    padding: 5px 0;
+    cursor: pointer;
+  }
+  .read_more{
+    background: #ffc238;
+    
+  }
+  .add_cart{
+    background: #ff4c4c;
+    color: #fff;
+  }
+}
+.products_list{
+  padding: 20px 0;
 }
 </style>

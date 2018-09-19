@@ -50,6 +50,7 @@ export default {
   letter-spacing: 1px;
   color: #666;
   padding: 10px;
+  margin-bottom: 30px;
   box-shadow: 1px 3px 5px #eee; 
   .class{
     border-radius: 5px;
