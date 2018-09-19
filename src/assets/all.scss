@@ -1,0 +1,30 @@
+@import url(//fonts.googleapis.com/earlyaccess/notosanstc.css);
+body,
+html {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  min-height: 100vh;
+  //background: #222;
+  font-family: "Noto Sans TC", sans-serif;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  border-top: 2px solid #fbc324;
+}
+a {
+  text-decoration: none;
+}
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+span,
+ul,
+li {
+  padding: 0;
+  margin: 0;
+}
