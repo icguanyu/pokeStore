@@ -2,7 +2,7 @@
   <div>  
     <div class="navbar">
       <div class="logo">
-        <img src="../static/img/pokemon_store.png" alt="">
+        <img src="../assets/img/pokemon_store.png" alt="">
       </div>
       <div class="top_right">
         <ul>
