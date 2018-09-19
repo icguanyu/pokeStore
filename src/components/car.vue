@@ -17,7 +17,7 @@ export default {
   cursor: pointer;
   width: 60px;
   height: 60px;
-  background-image: url("../static/images/ball.png");
+  background-image: url("../static/img/ball.png");
   background-size: cover;
   position: fixed;
   right: 50px;
