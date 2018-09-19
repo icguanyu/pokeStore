@@ -77,19 +77,19 @@ export default {
     background-position: center center;
     background-size: cover;
     &.slide-1 {
-      background-image: url("../assets/img/slide/slide_0.jpg");
+      background-image: url("../static/images/slide/slide_0.jpg");
     }
     &.slide-2 {
-      background-image: url("../assets/img/slide/slide_1.jpg");
+      background-image: url("../static/images/slide/slide_1.jpg");
     }
     &.slide-3 {
-      background-image: url("../assets/img/slide/slide_2.jpg");
+      background-image: url("../static/images/slide/slide_2.jpg");
     }
     &.slide-4 {
-      background-image: url("../assets/img/slide/slide_3.jpg");
+      background-image: url("../static/images/slide/slide_3.jpg");
     }
     &.slide-5 {
-      background-image: url("../assets/img/slide/slide_4.jpg");
+      background-image: url("../static/images/slide/slide_4.jpg");
     }
   }
 }

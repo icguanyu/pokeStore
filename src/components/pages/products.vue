@@ -5,23 +5,23 @@
       <p class="class_titel">商品分類</p>
       <div class="items">
         <div class="item">
-          <img src="../../assets/img/products/1.png" alt="">
+          <img src="../../static/images/products/1.png" alt="">
           <p class="item_name">精選商品</p>
         </div>
         <div class="item">
-          <img src="../../assets/img/products/2.png" alt="">
+          <img src="../../static/images/products/2.png" alt="">
           <p class="item_name">精靈球</p>
         </div>
         <div class="item">
-          <img src="../../assets/img/products/8.png" alt="">
+          <img src="../../static/images/products/8.png" alt="">
           <p class="item_name">藥品補給</p>
         </div>
         <div class="item">
-          <img src="../../assets/img/products/21.png" alt="">
+          <img src="../../static/images/products/21.png" alt="">
           <p class="item_name">野外求生道具</p>
         </div>
         <div class="item">
-          <img src="../../assets/img/products/26.png" alt="">
+          <img src="../../static/images/products/26.png" alt="">
           <p class="item_name">精選組合包</p>
         </div>
       </div>
