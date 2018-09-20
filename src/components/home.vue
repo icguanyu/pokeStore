@@ -39,9 +39,11 @@ export default {
     getCart(){
       const vm = this;
       const api = `${process.env.APIPATH}/api/${process.env.CUSTOMPATH}/cart`;
+      vm.isLoading = true
       this.$http.get(api).then(function(response) {
         console.log(response)
         vm.cart = response.data.data
+        vm.isLoading = false
       });
     },
     addtoCart(id, qty = 1){

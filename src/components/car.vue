@@ -1,7 +1,7 @@
 <template>
   <div>
+    <loading v-if="isLoading"></loading>
     <div class="inner_car">
-      <loading v-if="!isLoading"></loading>
       <h1><i class="fas fa-cart-arrow-down"></i>我的購物車</h1>
       <div class="list">
         <table>
@@ -69,10 +69,10 @@ export default {
     removeCartItem(id){
       const vm = this;
       const api = `${process.env.APIPATH}/api/${process.env.CUSTOMPATH}/cart/${id}`;
-      vm.isLoading = true
+      
       this.$http.delete(api).then(function(response) {
         vm.getCart()
-        vm.isLoading = false
+        
       });
     },
     getCart() {
@@ -96,11 +96,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.loading{
-  z-index: 0;
-  height: 100%;
-  border-radius: 10px;
-}
 @mixin scrollbars($size, $foreground-color, $background-color) {
   ::-webkit-scrollbar {
     width: $size;
@@ -123,7 +118,6 @@ export default {
   width: 418px;
   height: 600px;
   padding: 15px;
-  border-radius: 10px;
   background: #fff;
   border: 1px solid #999;
   transition: all .5s;
@@ -138,7 +132,6 @@ export default {
     background-size: cover;
     background: url("../assets/img/ball_bg.png") no-repeat;
     background-position: center;
-    z-index: 10;
   }
   h1 {
     text-align: center;
