@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="inner_car">
-      <loading v-if="isLoading"></loading>
+      <loading v-if="!isLoading"></loading>
       <h1><i class="fas fa-cart-arrow-down"></i>我的購物車</h1>
       <div class="list">
         <table>
@@ -281,7 +281,7 @@ export default {
   }
 }
 
-@media screen and (max-width: 640px) {
+@media screen and (max-width: 736px) {
   .car {
     right: 20px;
     bottom: 20px;
@@ -291,7 +291,7 @@ export default {
   }
   .inner_car{
     width: 90%;
-    max-height: 80%;
+    max-height: 85%;
     box-sizing: border-box;
     padding: 8px;
     &:before{
@@ -306,7 +306,7 @@ export default {
       }
     }
     .list{
-      max-height: 230px;
+      max-height: 35%;
       table{
         td{
           padding: 2px 0;
