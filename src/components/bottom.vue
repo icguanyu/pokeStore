@@ -1,7 +1,9 @@
 <template>
   <footer>
+    <div class="shop">
+      <img src="../assets/img/shop.png" alt="">
+    </div>
     <div class="container">
-      <!-- <img src="../assets/img/ball_bg.png" alt=""> -->
       <img src="../assets/img/pokemon_store.png" alt="">
       <div class="info">
         <p>實體店面：真新鎮大木路一段6號</p>
@@ -26,7 +28,15 @@ export default {
 <style lang="scss" scoped>
 footer {
   width: 100%;
-  
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  .shop{
+    img{
+      max-width: 800px;
+      width: 100%;
+    }
+  }
   .container{
     display: flex;
     font-size: 14px;

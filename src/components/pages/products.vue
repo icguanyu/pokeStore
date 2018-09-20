@@ -41,7 +41,7 @@
           </div>
           <div class="more">
             <div class="read_more">詳細內容</div>
-            <div class="add_cart">加入購物車</div>
+            <div class="add_cart" @click="addtoCart(product.id)">加入購物車</div>
           </div>
         </swiper-slide>
         <div class="swiper-pagination" slot="pagination"></div>
@@ -66,6 +66,10 @@ export default {
       swiperOption: {
         slidesPerView: 4,
         spaceBetween: 10,
+        speed: 600, 
+        autoplay:{
+          delay: 5000,
+        },
         pagination: {
           el: '.swiper-pagination',
           clickable: true
@@ -103,6 +107,9 @@ export default {
         vm.pagination = response.data.pagination
         vm.isLoading = false
       });
+    },
+    addtoCart(id) {
+      this.$emit('addtoCart', id);
     }
   },
   created(){
@@ -140,7 +147,7 @@ export default {
   box-sizing: border-box;
   .categories{
     background: #ff4c4c;
-    font-size: 1px;
+    font-size: 12px;
     display: inline-block;
     color: #fff;
     position: absolute;

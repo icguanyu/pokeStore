@@ -1,13 +1,14 @@
 <template>
   <div class="topSlide">
+    <loading v-if="isLoading"></loading>
     <navbar></navbar>
     <slide></slide>
     <h1>＂冒險者！歡迎來到神奇寶貝購物中心＂</h1>
     <div class="news">
       <p>2018.09.21<span class="class emergency">緊急</span>因真新鎮受超夢大軍侵襲，暫時停止營業，不便之處，敬請見諒。</p>
     </div>
-    <products></products>
-    <car></car>
+    <products @addtoCart="addtoCart"></products>
+    <car :cart="cart" @getCart="getCart"></car>
   </div>
 </template>
 
@@ -16,13 +17,50 @@ import navbar from '@/components/navbar'
 import slide from '@/components/slide'
 import car from '@/components/car'
 import products from '@/components/pages/products'
+import loading from "@/components/loading";
 export default {
   name: "Home",
+  data(){
+    return{
+      cart:{
+        carts:[]
+      },
+      isLoading: false,
+    }
+  },
   components:{
     navbar,
     slide,
     car,
-    products
+    products,
+    loading
+  },
+  methods:{
+    getCart(){
+      const vm = this;
+      const api = `${process.env.APIPATH}/api/${process.env.CUSTOMPATH}/cart`;
+      this.$http.get(api).then(function(response) {
+        console.log(response)
+        vm.cart = response.data.data
+      });
+    },
+    addtoCart(id, qty = 1){
+      const vm = this;
+      const api = `${process.env.APIPATH}/api/${process.env.CUSTOMPATH}/cart`;
+      const cart = {
+        product_id:id,
+        qty
+      }
+      vm.isLoading = true
+      this.$http.post(api,{data: cart}).then(function(response) {
+        //console.log(response)
+        vm.getCart()
+        vm.isLoading = false
+      });
+    },
+  },
+  created(){
+    this.getCart()
   }
 };
 </script>

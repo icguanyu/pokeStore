@@ -35,7 +35,7 @@ export default {
         loop: true,
         speed: 300,  
         autoplay: {
-          delay: 5000,
+          delay: 6000,
         },
         slidesPerView: "auto",
         centeredSlides: true,
