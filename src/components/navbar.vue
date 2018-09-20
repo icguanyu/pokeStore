@@ -6,22 +6,34 @@
       </div>
       <div class="top_right">
         <ul>
-          <li>登入/註冊</li>
-          <li>購物車</li>
-          <!-- <li>藥品補給</li>
-          <li>野外生活道具</li>
-          <li>冒險者組合包</li> -->
+          <li class="sign">登入/註冊</li>
+          <li>購物車(3)</li>
         </ul>
+        <div class="hamburgur" @click="toggle">
+          <div class="nav_icon"></div>
+        </div>
       </div>
     </div>
     <div class="main_menu">
       <ul>
-          <li>精選商品</li>
-          <li>精靈球</li>
-          <li>藥品補給</li>
-          <li>野外生活道具</li>
-          <li>冒險者組合包</li>
-        </ul>
+        <li>精選商品</li>
+        <li>精靈球</li>
+        <li>藥品補給</li>
+        <li>野外生活道具</li>
+        <li>冒險者組合包</li>
+      </ul>
+    </div>
+    <div class="mobile_menu">
+      <ul class="option">
+        <li>登入／註冊</li>
+      </ul>
+      <ul class="menu">
+        <li>精選商品</li>
+        <li>精靈球</li>
+        <li>藥品補給</li>
+        <li>野外生活道具</li>
+        <li>冒險者組合包</li>
+      </ul>
     </div>
   </div>
 
@@ -29,14 +41,27 @@
 
 <script>
 import $ from "jquery";
+//手機選單
 
 export default {
-  name: "navbar"
+  name: "navbar",
+  methods: {
+    toggle(e) {
+      $('.hamburgur').children().toggleClass("nav_open");
+      $('.mobile_menu').toggleClass('active')
+      e.stopPropagation()
+      $(document).on('click', function() {
+        $('.hamburgur').children().removeClass('nav_open')
+        $('.mobile_menu').removeClass('active')
+      })
+    }
+  }
 };
 </script>
 
 <style lang="scss" scoped>
 .navbar {
+  z-index: 10;
   max-width: 1080px;
   width: 100%;
   padding: 10px 0;
@@ -69,6 +94,47 @@ export default {
     }
   }
 }
+
+.hamburgur {
+  cursor: pointer;
+  padding: 20px 10px;
+  display: none;
+  .nav_icon {
+    background: #000;
+    display: block;
+    height: 2px;
+    position: relative;
+    transition: all 0.2s ease-out;
+    width: 24px;
+    &::before,
+    &::after {
+      background: #000;
+      content: "";
+      display: block;
+      height: 100%;
+      position: absolute;
+      transition: all 0.2s ease-out;
+      width: 100%;
+    }
+    &::before {
+      top: -6px;
+    }
+    &::after {
+      top: 6px;
+    }
+  }
+  .nav_open {
+    background: transparent;
+    &::before {
+      top: 0;
+      transform: rotate(-45deg);
+    }
+    &::after {
+      top: 0;
+      transform: rotate(45deg);
+    }
+  }
+}
 .main_menu {
   display: flex;
   font-size: 14px;
@@ -79,7 +145,7 @@ export default {
     list-style: none;
   }
   li {
-    flex:1;
+    flex: 1;
     text-align: center;
     cursor: pointer;
     padding: 10px 20px;
@@ -89,6 +155,70 @@ export default {
     &:hover {
       box-shadow: inset 0px -3px 0px #fb2424;
     }
+  }
+}
+.mobile_menu {
+  display: none;
+  height: 100vh;
+  width: 100%;
+  color: #fff;
+  overflow-y: hidden;
+  background: rgba(255, 212, 89, 0.95);
+  opacity: 0;
+  position: absolute;
+  transform: translateX(-100%);
+  z-index: 9;
+  transition: all .3s;
+  ul{
+    list-style: none;
+    li{
+      cursor: pointer;
+      font-size: 18px;
+      padding: 20px 20px;
+      letter-spacing: 3px;
+      color: #333;
+      &:hover{
+        background: #ffe9aa;
+      }
+    }
+  }
+  .option{
+    ul{
+      display: flex;
+      justify-content: flex-end;
+      padding-right: 20px;
+    }
+  }
+}
+.active{
+  opacity: 1;
+  transform: translateX(0%);
+}
+@media screen and (max-width: 640px) {
+  .navbar {
+    padding: 0px;
+    .logo {
+      width: 180px;
+    }
+    .top_right {
+      display: flex;
+      ul {
+        .sign{
+          display: none;
+        }
+      }
+      .hamburgur{
+        display: block;
+      }
+    }
+  }
+  .main_menu {
+    ul {
+      display: none;
+    }
+  }
+  .mobile_menu{
+    display: block;
   }
 }
 </style>

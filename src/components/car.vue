@@ -23,6 +23,7 @@ export default {
   right: 50px;
   bottom: 50px;
   transition: all .3s;
+  z-index: 10;
   animation: 3s wave infinite ease-in-out;
   &:hover{
     bottom: 55px;
@@ -76,4 +77,13 @@ export default {
 //     transform: translateY(0%)
 //   }
 // }
+@media screen and (max-width: 640px) {
+  .car{
+    right: 20px;
+    bottom: 20px;
+    width: 40px;
+    height: 40px;
+    font-size: 12px;
+  }
+}
 </style>

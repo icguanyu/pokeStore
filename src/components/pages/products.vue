@@ -69,12 +69,27 @@ export default {
         pagination: {
           el: '.swiper-pagination',
           clickable: true
+        },
+        breakpoints: {
+          480: {
+            slidesPerView: 1,
+            spaceBetween: 20
+          },
+          640: {
+            slidesPerView: 2,
+            spaceBetween: 30
+          },
+          800: {
+            slidesPerView: 3,
+            spaceBetween: 30
+          }
         }
       },
       isLoading: false,
       products: [],
       pagination:{},
       tempProduct: {},
+      screenWidth: document.body.clientWidth
     }
   },
   methods:{
@@ -213,26 +228,43 @@ export default {
 }
 .more{
   width: 100%;
-  
   display: flex;
   margin-top: 10px;
-  justify-content: space-around;
+  justify-content: space-between;
   .read_more,.add_cart{
     flex:1;
     text-align: center;
     padding: 5px 0;
+    border: 1px solid #ccc;
     cursor: pointer;
   }
   .read_more{
-    background: #ffc238;
-    
+    margin-right: 5px;
+    &:hover{
+      background: #ffc238;
+      border: 1px solid #ffc238;
+    }
   }
   .add_cart{
-    background: #ff4c4c;
-    color: #fff;
+    &:hover{
+      background: #ff4c4c;
+      border: 1px solid #ff4c4c;
+      color: #fff;
+    }
   }
 }
 .products_list{
   padding: 20px 0;
+}
+@media screen and (max-width: 640px) {
+  .categories{
+    margin: 0;
+    .items{
+      .item{
+        flex-direction: column;
+        font-size: 12px;
+      }
+    }
+  }
 }
 </style>

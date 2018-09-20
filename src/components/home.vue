@@ -73,4 +73,15 @@ export default {
     width: 0;
   }
 }
+@media screen and (max-width: 640px) {
+  .topSlide{
+    h1{
+      font-size: 20px;
+    }
+  }
+  .news{
+    width: 90%;
+    margin: auto;
+  }
+}
 </style>

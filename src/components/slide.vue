@@ -99,4 +99,12 @@ export default {
   opacity: 0.3;
   transition: all .3s;
 }
+@media screen and (max-width: 640px) {
+  .swiper-container {
+    height: 280px;
+  }
+  .swiper-slide{
+    width: 70%;
+  }
+}
 </style>

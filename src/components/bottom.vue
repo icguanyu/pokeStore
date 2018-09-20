@@ -33,7 +33,8 @@ footer {
     color: #666;
     align-items: center;
     justify-content: space-between;
-    width: 1080px;
+    max-width: 1080px;
+    width: 100%;
     padding: 20px 0;
     margin: 0 auto;
     border-top: 1px solid #aaa;
@@ -42,6 +43,16 @@ footer {
     }
     a{
       color: #666;
+    }
+  }
+}
+@media screen and (max-width: 640px) {
+  footer{
+    .container{
+      padding: 10px 20px;
+      flex-direction: column;
+      align-items: flex-start;
+      box-sizing: border-box;
     }
   }
 }

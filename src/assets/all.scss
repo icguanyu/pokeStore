@@ -5,12 +5,12 @@ html {
   padding: 0;
   width: 100%;
   min-height: 100vh;
-  //background: #222;
   font-family: "Noto Sans TC", sans-serif;
   position: relative;
   display: flex;
   justify-content: center;
-  border-top: 2px solid #fbc324;
+  //border-top: 2px solid #fbc324;
+  overflow-x: hidden;
 }
 a {
   text-decoration: none;
@@ -28,3 +28,4 @@ li {
   padding: 0;
   margin: 0;
 }
+
