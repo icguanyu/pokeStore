@@ -291,22 +291,45 @@ export default {
   }
   .inner_car{
     width: 95%;
-    height: fit-content;
+    height: 80%;
     box-sizing: border-box;
+    padding: 8px;
     &:before{
       display: none;
     }
     h1{
       margin: 0;
+      padding: 5px 0;
+      font-size: 14px;
+      i{
+        font-size: 14px;
+      }
     }
     .list{
-      max-height: 360px;
+      max-height: 230px;
+      table{
+        td{
+          padding: 2px 0;
+          font-size: 14px;
+        }
+      }
+    }
+    .total{
+      display: flex;
+      align-items: center;
+      font-size: 12px;
+      justify-content: space-around;
+      .onsale{
+        font-size: 14px;
+      }
     }
     .cupcon,.action{
       margin: 0px;
       flex-direction: column;
+      font-size: 14px;
       *{
         margin: 3px;
+        padding: 0 10px;
       }
     }
   }
