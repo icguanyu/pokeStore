@@ -290,8 +290,8 @@ export default {
     font-size: 12px;
   }
   .inner_car{
-    width: 95%;
-    height: 80%;
+    width: 90%;
+    max-height: 80%;
     box-sizing: border-box;
     padding: 8px;
     &:before{
@@ -300,9 +300,9 @@ export default {
     h1{
       margin: 0;
       padding: 5px 0;
-      font-size: 14px;
+      font-size: 18px;
       i{
-        font-size: 14px;
+        font-size: 18px;
       }
     }
     .list{
@@ -329,7 +329,7 @@ export default {
       font-size: 14px;
       *{
         margin: 3px;
-        padding: 0 10px;
+        padding: 2px 10px;
       }
     }
   }
