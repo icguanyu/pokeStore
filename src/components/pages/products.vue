@@ -257,6 +257,16 @@ export default {
   padding: 20px 0;
 }
 @media screen and (max-width: 640px) {
+  .swiper-container{
+    width: 95%;
+  }
+  .swiper-slide{
+    user-select: none;
+    .categories{
+      font-size: 16px;
+      margin: 6px;
+    }
+  }
   .categories{
     margin: 0;
     .items{
