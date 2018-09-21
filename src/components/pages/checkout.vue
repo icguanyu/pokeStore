@@ -11,7 +11,7 @@
       <p class="empty" v-if="!cart.carts.length">購物車沒有東西哦！</p>
       <div class="cartlist" v-else>
         <div class="action">
-          <input type="text" placeholder="請輸入優惠碼" v-model="coupon_code">
+          <input type="text" placeholder="請輸入優惠碼 試試abc?" v-model="coupon_code">
           <button @click="addCouponCode">套用優惠碼</button>
           <button>想要優惠碼?</button>
         </div>

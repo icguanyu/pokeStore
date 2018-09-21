@@ -27,7 +27,7 @@ export default {
   justify-content: center;
   align-items: center;  
   img{
-    width: 160px;
+    width: 120px;
     opacity: .9 ;
   }
 }

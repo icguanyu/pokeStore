@@ -26,7 +26,7 @@
         </div>
       </div>
     </div>
-    <p class="categories_titel">精選商品</p>
+    <p class="categories_titel">最新上架</p>
     <div class="products_list">
       <!-- swiper -->
       <swiper :options="swiperOption">
@@ -34,7 +34,7 @@
           <div class="categories">{{ product.category }}</div>
           <img :src="product.imageUrl" alt="">
           <div class="title">{{ product.title }}</div>
-          <p class="intro">{{ product.description }}</p>
+          <p class="intro">{{ product.description | textlength }}</p>
           <div class="price">
             <div class="onsale_price">NT${{product.price}}元</div>
             <div class="ori_price">原價{{ product.origin_price }}元</div>

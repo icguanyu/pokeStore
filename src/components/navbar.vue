@@ -168,7 +168,7 @@ export default {
 .main_menu {
   display: flex;
   max-width: 1080px;
-  font-size: 14px;
+  font-size: 16px;
   margin: auto;
   ul {
     width: 100%;

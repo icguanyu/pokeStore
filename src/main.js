@@ -22,10 +22,11 @@ VeeValidate.Validator.localize('zh_TW',attributesTW)
 
 import currencyFilter from './filters/currency'
 import dateFilter from './filters/date'
+import textlength from './filters/textlength'
 
 Vue.filter('currency',currencyFilter)
 Vue.filter('dateFilter',dateFilter)
-
+Vue.filter('textlength',textlength)
 
 new Vue({
   el: '#app',
