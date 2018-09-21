@@ -4,8 +4,11 @@ import Home from '@/components/pages/home'
 import Checkout from '@/components/pages/checkout'
 import Comfirm from '@/components/pages/comfirm'
 import Signin from '@/components/pages/signin'
-
 import Admin from '@/components/pages/admin'
+import productsManager from '@/components/pages/productsManager'
+import orderManager from '@/components/pages/orderManager'
+import cupconManager from '@/components/pages/cupconManager'
+
 Vue.use(Router)
 
 export default new Router({
@@ -35,9 +38,29 @@ export default new Router({
       component: Signin 
     },
     {
-      path: '/admin',
+      path: '',
       name: 'admin',
-      component: Admin 
+      component: Admin,
+      children:[
+        {
+          path: '/admin',
+          name: 'productsManger',
+          component: productsManager,
+          meta: { requiresAuth: true},
+        },
+        {
+          path: '/admin/orderManager',
+          name: 'orderManager',
+          component: orderManager,
+          meta: { requiresAuth: true}
+        },
+        {
+          path: '/admin/cupconManager',
+          name: 'cupconManager',
+          component: cupconManager,
+          meta: { cupconManager: true}
+        },
+      ]
     }
   ]
 })

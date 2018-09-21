@@ -7,7 +7,7 @@
       <div class="top_right">
         <ul>
           <router-link to="/signin"><li class="sign" v-if="!status">管理員登入</li></router-link>
-          <li class="sign" v-if="status" @click="signout" >登出</li>
+          <li class="sign" v-if="status" @click="signout">登出</li>
           <router-link to="/checkout"><li class="cart" v-if="!status">購物車({{cart.carts.length}})</li></router-link>
           <router-link to="/admin"><li class="sign" v-if="status">進入後台</li></router-link>
         </ul>
@@ -29,7 +29,7 @@
       <ul class="option">
         <router-link to="/admin"><li class="sign" v-if="status">進入後台管理</li></router-link>
         <router-link to="/signin"><li class="sign" v-if="!status">登入/註冊</li></router-link>
-        <li class="sign" v-if="status" @click="signout" >登出！</li>
+        <li class="sign" v-if="status" @click="signout">登出！</li>
       </ul>
       <ul class="menu">
         <li>精選商品</li>

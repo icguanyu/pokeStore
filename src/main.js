@@ -8,12 +8,25 @@ import VueAxios from 'vue-axios'
 import VeeValidate from 'vee-validate'
 import attributesTW from 'vee-validate/dist/locale/zh_TW.js';
 
+import 'bootstrap'
+
 Vue.use(VueAxios, axios)
 Vue.config.productionTip = false
+
+axios.defaults.withCredentials = true;
 
 Vue.use(VeeValidate);
 VeeValidate.Validator.localize('zh_TW',attributesTW)
 /* eslint-disable no-new */
+
+
+import currencyFilter from './filters/currency'
+import dateFilter from './filters/date'
+
+Vue.filter('currency',currencyFilter)
+Vue.filter('dateFilter',dateFilter)
+
+
 new Vue({
   el: '#app',
   router,

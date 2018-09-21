@@ -142,12 +142,13 @@ export default {
   position: relative;
   display: flex;
   align-items: center;
+  justify-content: space-evenly;
   flex-direction: column;
   padding: 5px 15px;
   box-sizing: border-box;
   .categories{
     background: #ff4c4c;
-    font-size: 12px;
+    font-size: 14px;
     display: inline-block;
     color: #fff;
     position: absolute;
@@ -192,6 +193,9 @@ export default {
       color: #888;
     }
   }
+}
+.swiper-pagination{
+  bottom: 0px;
 }
 .categories_titel{
   position: relative;
