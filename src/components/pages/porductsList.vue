@@ -1,0 +1,326 @@
+<template>
+  <div class="topSlide">
+    <alert :alert="alert" @closealert="closealert"></alert>
+    <loading v-if="isLoading" ></loading>
+    <navbar :cart="cart" :status="status" @signout="signout"></navbar>
+    <slide></slide>
+    <div class="products_box">
+      <div class="categories">
+        <div class="items">
+          <div class="item">
+            <img src="../../assets/img/products/1.png" alt="">
+            <p class="item_name">精選商品</p>
+          </div>
+          <div class="item">
+            <img src="../../assets/img/products/2.png" alt="">
+            <p class="item_name">精靈球</p>
+          </div>
+          <div class="item">
+            <img src="../../assets/img/products/8.png" alt="">
+            <p class="item_name">藥品補給</p>
+          </div>
+          <div class="item">
+            <img src="../../assets/img/products/21.png" alt="">
+            <p class="item_name">野外求生道具</p>
+          </div>
+          <div class="item">
+            <img src="../../assets/img/products/26.png" alt="">
+            <p class="item_name">精選組合包</p>
+          </div>
+        </div>
+    
+      </div>
+      <div class="products_list">
+        <div class="categories_titel">精選產品</div>
+        <div class="list">
+          <div class="item" v-for="item in products" :key="item.id">
+            <div class="bgimg" :style="{backgroundImage: `url(${item.imageUrl})`}"></div>
+            <div class="card-body">
+              <span class="category">{{item.category}}</span>
+              <p class="title">{{item.title}}</p>
+              <p class="text">{{item.description|textlength}}</p>
+              <div class="origin_price" v-if="item.price==item.origin_price">原價 NT${{ item.origin_price }} 元</div>
+              <div class="sale_price" v-if="item.price!==item.origin_price">
+                特價 NT${{ item.price }} 元
+              </div>
+            </div>
+            <div class="cardaction">
+              <button type="button" @click="getProduct(item.id)">
+                <i class="fas fa-spinner fa-spin" v-if="status.loadingItem===item.id"></i>查看更多
+              </button>
+              <button type="button" @click="addtoCart(item.id,item.title)">加到購物車</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!--頁碼-->
+    </div>
+    <car :cart="cart" @getCart="getCart"></car>
+    <bottom></bottom>
+  </div>
+</template>
+
+<script>
+import navbar from '@/components/navbar'
+import car from '@/components/car'
+import slide from '@/components/slide'
+import loading from "@/components/loading";
+import alert from "@/components/alert";
+import bottom from '@/components/bottom'
+export default {
+  name: "Home",
+  data(){
+    return{
+      products: [],
+      product: [],
+      cart:{
+        carts:[]
+      },
+      isLoading: false,
+      alert: {
+        boolen: false,
+        title: ''
+      },
+      status: false,//登入狀態
+    }
+  },
+  components:{
+    bottom,
+    navbar,
+    slide,
+    car,
+    loading,
+    alert
+  },
+  methods:{ 
+    getProducts(page = 1) {
+      const vm = this;
+      const api = `${process.env.APIPATH}/api/${process.env.CUSTOMPATH}/products?page=${page}`;
+      vm.isLoading = true
+      this.$http.get(api).then(function(response) {
+        vm.products = response.data.products;
+        vm.isLoading = false
+      });
+    },
+    getCart(){
+      const vm = this;
+      const api = `${process.env.APIPATH}/api/${process.env.CUSTOMPATH}/cart`;
+      vm.isLoading = true
+      this.$http.get(api).then(function(response) {
+        vm.cart = response.data.data
+        vm.isLoading = false
+      });
+    },
+    addtoCart(id,title, qty = 1){
+      const vm = this;
+      const api = `${process.env.APIPATH}/api/${process.env.CUSTOMPATH}/cart`;
+      const cart = {
+        product_id:id,
+        qty
+      }
+      vm.isLoading = true
+      this.$http.post(api,{data: cart}).then(function(response) {
+        vm.showalert(title)
+        vm.getCart()
+        vm.isLoading = false
+      });
+      
+    },
+    showalert(title){
+      const vm = this
+      vm.alert.boolen = true
+      vm.alert.title = `已將「${title}」加入購物車`
+      setTimeout(()=>{
+        vm.alert.boolen = false
+      },3000)
+    },
+    closealert(){
+      this.alert = false
+    },
+    signout(){
+      const vm = this
+      const api = `${process.env.APIPATH}/logout`
+      vm.isLoading = true
+      this.$http.post(api).then((res)=>{
+        if(res.data.success){
+          vm.$router.push('/signin')
+          vm.isLoading = false
+        }
+      });
+    },
+  },
+  created(){
+    this.getProducts()
+  }
+};
+</script>
+
+<!-- Add "scoped" attribute to limit CSS to this component only -->
+<style lang="scss" scoped>
+.topSlide {
+  max-width: 1080px;
+  width: 100%;
+  margin: 0 auto;
+  background-position: center center;
+  background-size: cover;
+  h1 {
+    color: #2b447d;
+    margin: 20px auto;
+    width: 18em;
+    border-right: 0.05em solid;
+    overflow: hidden;
+    font-weight: 900;
+    white-space: nowrap;
+    animation: typing 3s steps(18), insert 1s steps(1) infinite;
+  }
+}
+.categories_titel{
+  position: relative;
+  font-size: 24px;
+  font-weight: 600;
+  color: #53acac;
+  margin-bottom: 10px;
+}
+
+.products_box{
+  display: flex;
+}
+.categories{
+  flex:1;
+  margin-right: 10px;
+  .items{
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+    justify-content: space-around;
+    .item{
+      cursor: pointer;
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: center;
+      max-width: 180px;
+      padding: 5px;
+      border-radius: 5px;
+      border: 0.5px solid #cccccc;
+      margin-bottom:10px;
+      transition: .3s all;
+      &:hover{
+        border: .5px solid rgb(0, 119, 199);
+      }
+      img{
+        max-width: 50px;
+        max-height: 50px;
+      }
+      .item_name{
+        color: #333;
+        margin-left: 10px;
+      }
+    }
+  }
+}
+.products_list{
+  flex:6;
+  padding: 10px;
+  border: 1px solid #eee;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+}
+.list{
+  display: flex;
+  flex-wrap: wrap;
+}
+.item{
+  cursor: pointer;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 275px;
+  padding: 5px;
+  box-sizing: border-box;
+  margin-bottom: 8px;
+  margin-right: 8px;
+  border: 1px solid #eee;
+  &:hover{
+    .cardaction{
+      display: flex;
+      opacity: 1;
+    }
+  }
+  .bgimg{
+    margin: 20px 0;
+    box-sizing: border-box;
+    width: 100%;
+    height: 120px;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center center;
+  }
+  .category{
+    position: absolute;
+    top: 0;
+    right: 0;
+    color: #fff;
+    font-size: 14px;
+    padding: 0 5px;
+    background: #68cab3;
+  }
+  .title{
+    font-weight: 400;
+    letter-spacing: 3px;
+    margin: 5px 0;
+    font-size: 18px;
+  }
+  .text{
+    font-size: 14px;
+    letter-spacing: 1px;
+    color: #666;
+  }
+  .sale_price{
+    font-weight: 600;
+    font-size: 16px;
+    color: #fb5b5b;
+  }
+  .origin_price{
+    font-size: 14px;
+  }
+}
+.cardaction{
+  display: inline;
+  opacity: 0;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  background: rgba(black,.3);
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: all .5s;
+  button{
+    cursor: pointer;
+    color: #fff;
+    border: 1px solid #fff;
+    background: none;
+    transition: all .3s;
+    &:hover{
+      color:#000;
+      background: #fff;
+    }
+  }
+}
+@media screen and (max-width: 640px) {
+  .topSlide{
+    h1{
+      font-size: 20px;
+    }
+  }
+  .news{
+    width: 90%;
+    margin: auto;
+  }
+}
+</style>

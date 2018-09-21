@@ -4,26 +4,26 @@
     <p class="categories_titel">商品分類</p>
     <div class="categories">
       <div class="items">
-        <div class="item">
+        <router-link class="item" to="/porductsList">
           <img src="../assets/img/products/1.png" alt="">
           <p class="item_name">精選商品</p>
-        </div>
-        <div class="item">
+        </router-link>
+        <router-link class="item" to="/porductsList">
           <img src="../assets/img/products/2.png" alt="">
           <p class="item_name">精靈球</p>
-        </div>
-        <div class="item">
+        </router-link>
+        <router-link class="item" to="/porductsList">
           <img src="../assets/img/products/8.png" alt="">
           <p class="item_name">藥品補給</p>
-        </div>
-        <div class="item">
+        </router-link>
+        <router-link class="item" to="/porductsList">
           <img src="../assets/img/products/21.png" alt="">
           <p class="item_name">野外求生道具</p>
-        </div>
-        <div class="item">
+        </router-link>
+        <router-link class="item" to="/porductsList">
           <img src="../assets/img/products/26.png" alt="">
           <p class="item_name">精選組合包</p>
-        </div>
+        </router-link>
       </div>
     </div>
     <p class="categories_titel">最新上架</p>

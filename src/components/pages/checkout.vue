@@ -180,7 +180,7 @@ export default {
       }
       vm.isLoading = true
       this.$http.post(api,{data:coupon}).then(function(response) {
-        console.log(response)
+        // console.log(response)
         vm.getCart()
         vm.isLoading = false
       });

@@ -18,11 +18,11 @@
     </div>
     <div class="main_menu">
       <ul>
-        <li>精選商品</li>
-        <li>精靈球</li>
-        <li>藥品補給</li>
-        <li>野外生活道具</li>
-        <li>冒險者組合包</li>
+        <router-link to="/porductsList"><li>精選商品</li></router-link>
+        <router-link to="/porductsList"><li>精靈球</li></router-link>
+        <router-link to="/porductsList"><li>藥品補給</li></router-link>
+        <router-link to="/porductsList"><li>野外生活道具</li></router-link>
+        <router-link to="/porductsList"><li>冒險者組合包</li></router-link>
       </ul>
     </div>
     <div class="mobile_menu">
@@ -69,7 +69,7 @@ export default {
       const vm = this
       const api = `${process.env.APIPATH}/api/user/check`;
       this.$http.post(api).then(res => {
-        console.log(res.data);
+        // console.log(res.data);
         if (res.data.success) {
           //由伺服器判斷是否登入
           vm.status = true
