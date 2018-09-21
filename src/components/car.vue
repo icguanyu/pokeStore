@@ -1,10 +1,18 @@
 <template>
   <div>
-    <loading v-if="isLoading"></loading>
+    <loading v-if="isLoading"></loading> 
     <div class="inner_car">
-      <h1><i class="fas fa-cart-arrow-down"></i>我的購物車</h1>
+      <h1>我的購物車</h1>
+      <div class="anibox">
+        <div class="home">
+          <img src="../assets/img/home.png" alt="">
+        </div>
+        <div class="truck">
+          <img src="../assets/img/truck.png" alt="">
+        </div>
+      </div> 
       <div class="list">
-        <table>
+        <table v-if="!cart.carts.length==0">
           <thead>
             <tr>
               <td>品名</td>
@@ -22,6 +30,7 @@
             </tr>
           </tbody>
         </table>
+        <p class="empty" v-else>購物車還沒有任何東西哦</p>
       </div>
       
       <div class="total">
@@ -34,7 +43,7 @@
       </div>
       <div class="action">
         <button @click="hideCart">再逛逛</button>
-        <button>結帳去</button>
+        <router-link to="/checkout"><button>結帳去</button></router-link>
       </div>
     </div>
     <div class="car" @click="showCart">
@@ -69,10 +78,8 @@ export default {
     removeCartItem(id){
       const vm = this;
       const api = `${process.env.APIPATH}/api/${process.env.CUSTOMPATH}/cart/${id}`;
-      
       this.$http.delete(api).then(function(response) {
         vm.getCart()
-        
       });
     },
     getCart() {
@@ -121,25 +128,13 @@ export default {
   background: #fff;
   border: 1px solid #999;
   transition: all .5s;
-  &:before {
-    content: "";
-    position: absolute;
-    width: 500px;
-    height: 200px;
-    top: -100px;
-    left: 50%;
-    transform: translateX(-50%);
-    background-size: cover;
-    background: url("../assets/img/ball_bg.png") no-repeat;
-    background-position: center;
-  }
   h1 {
     text-align: center;
-    margin-top: 50px;
+    margin-top: 5px;
     font-size: 18px;
     font-weight: normal;
     letter-spacing: 3px;
-    padding: 10px 0;
+    padding: 5px 0;
     i {
       font-size: 26px;
     }
@@ -147,7 +142,7 @@ export default {
   .list {
     display: block;
     overflow-y: auto;
-    height: 360px;
+    height: 280px;
     table {
       width: 100%;
       border-collapse: collapse; //摺疊邊框
@@ -156,6 +151,7 @@ export default {
       }
       tr {
         width: 100%;
+        border: none;
       }
       tr:nth-child(even) {
         background: #fff1ca;
@@ -170,6 +166,13 @@ export default {
           cursor: pointer;
         }
       }
+    }
+    .empty{
+      padding: 30px;
+      margin: 20px;
+      border-radius: 15px;
+      background: #eee;
+      text-align: center;
     }
   }
   input,
@@ -214,9 +217,12 @@ export default {
   }
   .action{
     margin-top: 10px;
-    display: flex;
     button{
+      display: inline-block;
       font-size: 16px;
+      width: 100%;
+      box-sizing: border-box;
+      margin: 3px 0;
     }
   }
 }
@@ -273,8 +279,56 @@ export default {
     transform-origin: 50% 100%;
   }
 }
-
+.anibox{
+  padding-bottom: 20px; 
+  max-width: 1080px;
+  box-sizing: border-box;
+  overflow: hidden;
+  margin: auto;
+  display: flex;
+  justify-content: center;
+  position: relative;
+  .home{
+    img{
+      width: 160px;
+    }
+  }
+  .truck{
+    position: absolute;
+    bottom:-10px;
+    animation: 10s drive infinite linear;
+    img{
+      width: 80px;
+      animation: .5s wave infinite linear;
+    }
+  }
+}
+@keyframes drive {
+  0%{
+    right: -20%
+  }
+  40%{
+    right: 45%;
+  }
+  60%{
+    right: 45%;
+  }
+  100%{
+    right: 100%;
+  }
+}
+@keyframes wave {
+  0%{
+    transform: translateY(3%)
+  }
+  100%{
+    transform: translateY(0%)
+  }
+}
 @media screen and (max-width: 736px) {
+  .anibox{
+    display: none;
+  }
   .car {
     right: 20px;
     bottom: 20px;
@@ -321,8 +375,7 @@ export default {
       flex-direction: column;
       font-size: 14px;
       *{
-        margin: 3px;
-        padding: 2px 10px;
+        margin: 5px 0;
       }
     }
   }

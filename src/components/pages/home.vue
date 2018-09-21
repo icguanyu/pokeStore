@@ -1,7 +1,8 @@
 <template>
   <div class="topSlide">
-    <loading v-if="isLoading"></loading>
-    <navbar></navbar>
+    <alert :alert="alert" @closealert="closealert"></alert>
+    <loading v-if="isLoading" ></loading>
+    <navbar :cart="cart" :status="status" @signout="signout"></navbar>
     <slide></slide>
     <h1>＂冒險者！歡迎來到神奇寶貝購物中心＂</h1>
     <div class="news">
@@ -9,6 +10,7 @@
     </div>
     <products @addtoCart="addtoCart"></products>
     <car :cart="cart" @getCart="getCart"></car>
+    <bottom></bottom>
   </div>
 </template>
 
@@ -16,8 +18,10 @@
 import navbar from '@/components/navbar'
 import slide from '@/components/slide'
 import car from '@/components/car'
-import products from '@/components/pages/products'
+import products from '@/components/products'
 import loading from "@/components/loading";
+import alert from "@/components/alert";
+import bottom from '@/components/bottom'
 export default {
   name: "Home",
   data(){
@@ -26,14 +30,21 @@ export default {
         carts:[]
       },
       isLoading: false,
+      alert: {
+        boolen: false,
+        title: ''
+      },
+      status: false,
     }
   },
   components:{
+    bottom,
     navbar,
     slide,
     car,
     products,
-    loading
+    loading,
+    alert
   },
   methods:{
     getCart(){
@@ -41,12 +52,11 @@ export default {
       const api = `${process.env.APIPATH}/api/${process.env.CUSTOMPATH}/cart`;
       vm.isLoading = true
       this.$http.get(api).then(function(response) {
-        console.log(response)
         vm.cart = response.data.data
         vm.isLoading = false
       });
     },
-    addtoCart(id, qty = 1){
+    addtoCart(id,title,qty = 1){
       const vm = this;
       const api = `${process.env.APIPATH}/api/${process.env.CUSTOMPATH}/cart`;
       const cart = {
@@ -57,7 +67,30 @@ export default {
       this.$http.post(api,{data: cart}).then(function(response) {
         //console.log(response)
         vm.getCart()
+        vm.showalert(title)
         vm.isLoading = false
+      });
+    },
+    showalert(title){
+      const vm = this
+      vm.alert.boolen = true
+      vm.alert.title = `已將「${title}」加入購物車`
+      setTimeout(()=>{
+        vm.alert.boolen = false
+      },3000)
+    },
+    closealert(){
+      this.alert = false
+    },
+    signout(){
+      const vm = this
+      const api = `${process.env.APIPATH}/logout`
+      vm.isLoading = true
+      this.$http.post(api).then((res)=>{
+        if(res.data.success){
+          vm.$router.push('/signin')
+          vm.isLoading = false
+        }
       });
     },
   },

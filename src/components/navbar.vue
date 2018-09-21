@@ -2,12 +2,14 @@
   <div>  
     <div class="navbar">
       <div class="logo">
-        <img src="../assets/img/pokemon_store.png" alt="">
+        <router-link to="/"><img src="../assets/img/pokemon_store.png" alt=""></router-link>
       </div>
       <div class="top_right">
         <ul>
-          <li class="sign">登入/註冊</li>
-          <li>購物車(3)</li>
+          <router-link to="/signin"><li class="sign" v-if="!status">管理員登入</li></router-link>
+          <li class="sign" v-if="status" @click="signout" >登出</li>
+          <router-link to="/checkout"><li class="cart" v-if="!status">購物車({{cart.carts.length}})</li></router-link>
+          <router-link to="/admin"><li class="sign" v-if="status">進入後台</li></router-link>
         </ul>
         <div class="hamburgur" @click="toggle">
           <div class="nav_icon"></div>
@@ -25,7 +27,9 @@
     </div>
     <div class="mobile_menu">
       <ul class="option">
-        <li>登入／註冊</li>
+        <router-link to="/admin"><li class="sign" v-if="status">進入後台管理</li></router-link>
+        <router-link to="/signin"><li class="sign" v-if="!status">登入/註冊</li></router-link>
+        <li class="sign" v-if="status" @click="signout" >登出！</li>
       </ul>
       <ul class="menu">
         <li>精選商品</li>
@@ -45,6 +49,12 @@ import $ from "jquery";
 
 export default {
   name: "navbar",
+  data(){
+    return{
+      status:false
+    }
+  },
+  props: ['cart'],
   methods: {
     toggle(e) {
       $('.hamburgur').children().toggleClass("nav_open");
@@ -54,7 +64,26 @@ export default {
         $('.hamburgur').children().removeClass('nav_open')
         $('.mobile_menu').removeClass('active')
       })
+    },
+    check(){
+      const vm = this
+      const api = `${process.env.APIPATH}/api/user/check`;
+      this.$http.post(api).then(res => {
+        console.log(res.data);
+        if (res.data.success) {
+          //由伺服器判斷是否登入
+          vm.status = true
+        } else {
+          vm.status = false
+        }
+      });
+    },
+    signout(){
+      this.$emit('signout')
     }
+  },
+  created(){
+    this.check()
   }
 };
 </script>
@@ -63,6 +92,7 @@ export default {
 .navbar {
   z-index: 10;
   max-width: 1080px;
+  margin: 0 auto;
   width: 100%;
   padding: 10px 0;
   display: flex;
@@ -137,7 +167,9 @@ export default {
 }
 .main_menu {
   display: flex;
+  max-width: 1080px;
   font-size: 14px;
+  margin: auto;
   ul {
     width: 100%;
     display: flex;
@@ -205,6 +237,9 @@ export default {
       ul {
         .sign{
           display: none;
+        }
+        .cart{
+          padding: 10px 0;
         }
       }
       .hamburgur{

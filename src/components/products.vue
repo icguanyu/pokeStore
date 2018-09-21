@@ -5,23 +5,23 @@
     <div class="categories">
       <div class="items">
         <div class="item">
-          <img src="../../assets/img/products/1.png" alt="">
+          <img src="../assets/img/products/1.png" alt="">
           <p class="item_name">精選商品</p>
         </div>
         <div class="item">
-          <img src="../../assets/img/products/2.png" alt="">
+          <img src="../assets/img/products/2.png" alt="">
           <p class="item_name">精靈球</p>
         </div>
         <div class="item">
-          <img src="../../assets/img/products/8.png" alt="">
+          <img src="../assets/img/products/8.png" alt="">
           <p class="item_name">藥品補給</p>
         </div>
         <div class="item">
-          <img src="../../assets/img/products/21.png" alt="">
+          <img src="../assets/img/products/21.png" alt="">
           <p class="item_name">野外求生道具</p>
         </div>
         <div class="item">
-          <img src="../../assets/img/products/26.png" alt="">
+          <img src="../assets/img/products/26.png" alt="">
           <p class="item_name">精選組合包</p>
         </div>
       </div>
@@ -41,7 +41,7 @@
           </div>
           <div class="more">
             <div class="read_more">詳細內容</div>
-            <div class="add_cart" @click="addtoCart(product.id)">加入購物車</div>
+            <div class="add_cart" @click="addtoCart(product.id,product.title)">加入購物車</div>
           </div>
         </swiper-slide>
         <div class="swiper-pagination" slot="pagination"></div>
@@ -108,8 +108,8 @@ export default {
         vm.isLoading = false
       });
     },
-    addtoCart(id) {
-      this.$emit('addtoCart', id);
+    addtoCart(id,title) {
+      this.$emit('addtoCart', id,title);
     }
   },
   created(){
@@ -268,7 +268,6 @@ export default {
     width: 95%;
   }
   .swiper-slide{
-    user-select: none;
     .categories{
       font-size: 16px;
       margin: 6px;

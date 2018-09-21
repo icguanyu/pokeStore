@@ -29,3 +29,52 @@ li {
   margin: 0;
 }
 
+table {
+  width: 100%;
+  margin-bottom: 20px;
+  border-collapse: collapse; //摺疊邊框
+  thead {
+    background: #eee;
+    th{
+      font-weight: normal;
+      height: 40px;
+    }
+  }
+  tr{
+    border-bottom: 1px solid #ccc;
+  }
+  td {
+    padding: 6px;
+    font-weight: 200;
+    color: #333;
+    font-weight: normal;
+    i{
+      cursor: pointer;
+    }
+  }
+}
+::placeholder{
+  font-family: "Noto Sans TC", sans-serif;
+  letter-spacing: 1px;
+  font-size: 16px;
+  color: #aaa;
+}
+label{
+  display: block;
+  margin: 0 5px;
+}
+input,
+button,textarea {
+  font-size: 16px;
+  color: #666;
+  outline: none;
+  border: 1px solid #ccc;
+  padding: 5px;
+  margin: 5px;
+  letter-spacing: 2px;
+  background: #fff;
+  font-family: "Noto Sans TC", sans-serif;
+  border-radius: 3px;
+  transition: all .3s;
+  box-sizing: border-box;
+}

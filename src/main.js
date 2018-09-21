@@ -5,10 +5,14 @@ import App from './App'
 import router from './router'
 import axios from 'axios'
 import VueAxios from 'vue-axios'
+import VeeValidate from 'vee-validate'
+import attributesTW from 'vee-validate/dist/locale/zh_TW.js';
 
 Vue.use(VueAxios, axios)
 Vue.config.productionTip = false
 
+Vue.use(VeeValidate);
+VeeValidate.Validator.localize('zh_TW',attributesTW)
 /* eslint-disable no-new */
 new Vue({
   el: '#app',
@@ -16,3 +20,25 @@ new Vue({
   components: { App },
   template: '<App/>'
 })
+
+router.beforeEach((to, from, next) => {
+  if (to.meta.requiresAuth) {
+    //需要驗證,判斷是否登入
+    const api = `${process.env.APIPATH}/api/user/check`;
+    axios.post(api).then(res => {
+      console.log(res.data);
+      if (res.data.success) {
+        //由伺服器判斷是否登入
+        next();
+      } else {
+        alert("請重新登入");
+        next({
+          path: "/signin"
+        });
+      }
+    });
+  } else {
+    //不需驗證
+    next();
+  }
+});
