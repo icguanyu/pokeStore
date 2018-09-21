@@ -136,6 +136,7 @@ export default {
   max-width: 1080px;
   width: 100%;
   height: 340px;
+  padding-bottom: 20px;
 }
 .swiper-slide{
   border: 1px solid #ddd;
