@@ -12,8 +12,7 @@
 + 後台: 產品管理（新增/修改/刪除）、訂單管理、優惠券管理。
 
 ### 主要練習
-+ Vue
-+ VueCli
++ VueCli (2)
 + VueRouter
 + 元件概念
 + Webpack
@@ -57,6 +56,7 @@
 
 ## 使用外掛
 + [bootstrap](https://bootstrap.hexschool.com/) (僅後台使用)
++ [vue-axios](https://www.npmjs.com/package/vue-axios)
 + [swiper](http://idangero.us/swiper/) (可滑動的slideshow)
 + [VeeValidate](https://baianat.github.io/vee-validate/) (驗證)
 
