@@ -250,7 +250,7 @@ button{
 }
 @media screen and (max-width: 640px) {
   .products_box{
-    flex-direction: column-reverse;
+    flex-direction: column;
   }
 }
 </style>

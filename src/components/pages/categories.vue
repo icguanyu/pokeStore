@@ -273,7 +273,6 @@ export default {
   border: 1px solid #eee;
   &:hover{
     .cardaction{
-      display: flex;
       opacity: 1;
     }
   }
@@ -370,7 +369,38 @@ export default {
   }
   .list{
     .item{
+      cursor:auto;
       width: 100%;
+    }
+  }
+  .cardaction{
+    position: relative;
+    display: flex;
+    opacity: 1;
+    width: 100%;
+    height: 0;
+    height: auto;
+    background: none;
+    margin-top: 5px;
+    a{
+      color: #333;
+    }
+    button{
+      flex:1;
+      border: 1px solid #888;
+      color: #666;
+      font-size: 14px;
+      padding: 2px 5px;
+      margin: 0;
+      margin-right: 5px;
+      &:hover{
+        color:#fff;
+        border: 1px solid #68cab3;
+        background: #68cab3;
+        a{
+          color:#fff;
+        }
+      }
     }
   }
 }
