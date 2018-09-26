@@ -31,8 +31,8 @@
               </td>
               <td>{{ item.qty }}/{{ item.product.unit }}</td>
               <td>
-                <p>原價：NT${{ item.total }}</p>
-                <span v-if="item.final_total!==item.total">優惠價：NT${{ item.final_total }}</span>
+                <p>原價：NT{{ item.total|currency }}</p>
+                <span v-if="item.final_total!==item.total">優惠價：NT{{ item.final_total|currency }}</span>
               </td>
               <td><i class="far fa-trash-alt" @click="removeCartItem(item.id)"></i></td>
             </tr>
@@ -41,8 +41,10 @@
             <tr class="total">
               <td colspan="2" >總計</td>
               <td colspan="2" >
-                <p> 原價NT${{ cart.total }}</p>
-                <p class="onsale" v-if="cart.final_total!==cart.total">折扣價:NT${{ cart.final_total }}</p>
+                <p> 原價NT{{ cart.total|currency }}</p>
+                <p class="onsale" v-if="cart.final_total!==cart.total">
+                  折扣價:NT{{ cart.final_total|currency }}
+                </p>
               </td>
             </tr>
           </tfoot>

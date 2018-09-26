@@ -17,12 +17,22 @@ export default {
 ul{
   list-style: none;
   display: flex;
-  margin: 5px 0;
+  margin: 8px 0;
   padding: 5px 0;
   color: #999;
   li{
+    font-size: 14px;
     letter-spacing: 2px;
+    color: #4287d7;
   }
   
+}
+@media screen and(max-width: 640px){
+  ul{
+    margin: 8px 15px;
+    li{
+      letter-spacing: 0px;
+    }
+  }
 }
 </style>

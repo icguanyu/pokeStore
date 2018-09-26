@@ -4,6 +4,7 @@ import Home from '@/components/pages/home'
 import Checkout from '@/components/pages/checkout'
 import Comfirm from '@/components/pages/comfirm'
 import categories from '@/components/pages/categories'
+import productInfo from '@/components/pages/productInfo'
 //前台
 import Signin from '@/components/pages/signin'
 //後台
@@ -29,6 +30,11 @@ export default new Router({
       path: '/categories',
       name: 'categories',
       component: categories,
+    },
+    {
+      path: '/categories/:productId',
+      name: 'productInfo',
+      component: productInfo,
     },
     {
       path: '/checkout',

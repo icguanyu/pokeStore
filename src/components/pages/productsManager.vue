@@ -277,7 +277,7 @@ export default {
   margin: 10px auto;
   border: 1px solid #eee;
 }
-#productModal{
+#productModal,#delProductModal{
   transition: .5s all;
   background: rgba(black,.5);
 }

@@ -40,16 +40,17 @@
               <span class="category">{{item.category}}</span>
               <p class="title">{{item.title}}</p>
               <p class="text">{{item.description|textlength}}</p>
-              <div class="origin_price" v-if="item.price==item.origin_price">原價 NT${{ item.origin_price }} 元</div>
+              <div class="origin_price" v-if="item.price==item.origin_price">原價 NT{{ item.origin_price |currency }} 元</div>
               <div class="sale_price" v-if="item.price!==item.origin_price">
-                特價 NT${{ item.price }} 元
+                特價 NT{{ item.price|currency }} 元
               </div>
             </div>
             <div class="cardaction">
-              <button type="button" @click="getProduct(item.id)">
-                <i class="fas fa-spinner fa-spin" v-if="status.loadingItem===item.id"></i>查看更多
+              <button type="button" v-if="item.is_enabled">
+                <router-link :to="`/categories/${item.id}`">查看更多</router-link> 
               </button>
-              <button type="button" @click="addtoCart(item.id,item.title)">加到購物車</button>
+              <button v-if="!item.is_enabled">已售完</button>
+              <button v-else type="button" @click="addtoCart(item.id,item.title)">加到購物車</button>
             </div>
           </div>
         </div>
@@ -327,6 +328,10 @@ export default {
   justify-content: center;
   align-items: center;
   transition: all .5s;
+  a{
+    color: #fff;
+    transition: all .3s;
+  }
   button{
     cursor: pointer;
     color: #fff;
@@ -336,18 +341,37 @@ export default {
     &:hover{
       color:#000;
       background: #fff;
+      a{
+        color: #333;
+      }
     }
   }
 }
 @media screen and (max-width: 640px) {
-  .topSlide{
-    h1{
-      font-size: 20px;
+  .products_box{
+    width: 95%;
+    margin: auto;
+    flex-direction: column;
+  }
+  .categories{
+    .items{
+      flex-direction: row;
+      justify-content: flex-start;
+      .item{
+        flex-direction: column;
+        justify-content: flex-start;
+        flex:1;
+        font-size: 14px;
+        img{
+          width: 30px;
+        }
+      }
     }
   }
-  .news{
-    width: 90%;
-    margin: auto;
+  .list{
+    .item{
+      width: 100%;
+    }
   }
 }
 </style>

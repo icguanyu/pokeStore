@@ -36,12 +36,15 @@
           <div class="title">{{ product.title }}</div>
           <p class="intro">{{ product.description | textlength }}</p>
           <div class="price">
-            <div class="onsale_price">NT${{product.price}}元</div>
-            <div class="ori_price">原價{{ product.origin_price }}元</div>
+            <div class="onsale_price">NT{{product.price | currency}}元</div>
+            <div class="ori_price">原價{{ product.origin_price | currency}}元</div>
           </div>
           <div class="more">
-            <div class="read_more">詳細內容</div>
-            <div class="add_cart" @click="addtoCart(product.id,product.title)">加入購物車</div>
+            <div class="read_more" v-if="product.is_enabled">
+              <router-link :to="`/categories/${product.id}`">詳細介紹</router-link>
+            </div>
+            <div class="add_cart" v-if="!product.is_enabled">已售完</div>
+            <div class="add_cart" v-else @click="addtoCart(product.id,product.title)">加入購物車</div>
           </div>
         </swiper-slide>
         <div class="swiper-pagination" slot="pagination"></div>

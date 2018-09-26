@@ -17,7 +17,7 @@
             <tr>
               <td>品名</td>
               <td>品項</td>
-              <td>單價</td>
+              <td>金額</td>
               <td>刪除</td>
             </tr>
           </thead>
@@ -25,7 +25,7 @@
             <tr v-for="item in cart.carts" :key="item.id">
               <td>{{ item.product.title }}</td>
               <td>{{ item.qty }}/{{ item.product.unit }}</td>
-              <td>{{ item.final_total }}</td>
+              <td>{{ item.final_total|currency }}</td>
               <td><i class="far fa-trash-alt" @click="removeCartItem(item.id)"></i></td>
             </tr>
           </tbody>
@@ -34,7 +34,7 @@
       </div>
       
       <div class="total">
-        <p>小計:NT${{ cart.total }}</p>
+        <p>小計:NT{{ cart.total|currency }}</p>
         <p class="onsale" v-if="cart.final_total!==cart.total">折扣價:NT${{ cart.final_total }}</p>
       </div>
       <div class="cupcon">
@@ -145,7 +145,7 @@ export default {
   .list {
     display: block;
     overflow-y: auto;
-    height: 280px;
+    height: 260px;
     table {
       width: 100%;
       border-collapse: collapse; //摺疊邊框
@@ -198,7 +198,7 @@ export default {
     flex: 1;
     cursor: pointer;
     &:hover {
-      border: none ;
+      border: 1px solid #ffdd7c;
       background: #ffdd7c;
     }
   }
