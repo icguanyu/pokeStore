@@ -18,11 +18,11 @@
     </div>
     <div class="main_menu">
       <ul>
-        <router-link to="/porductsList"><li>最新商品</li></router-link>
-        <router-link to="/porductsList"><li>精靈球</li></router-link>
-        <router-link to="/porductsList"><li>藥品補給</li></router-link>
-        <router-link to="/porductsList"><li>生活道具</li></router-link>
-        <router-link to="/porductsList"><li>購物商城</li></router-link>
+        <router-link to="/categories"><li>最新商品</li></router-link>
+        <router-link to="/categories"><li>精靈球</li></router-link>
+        <router-link to="/categories"><li>藥品補給</li></router-link>
+        <router-link to="/categories"><li>生活道具</li></router-link>
+        <router-link to="/categories"><li>購物商城</li></router-link>
       </ul>
     </div>
     <div class="mobile_menu">
@@ -32,11 +32,11 @@
         <li class="sign" v-if="status" @click="signout">登出！</li>
       </ul>
       <ul class="menu">
-        <router-link to="/porductsList"><li>最新商品</li></router-link>
-        <router-link to="/porductsList"><li>精靈球</li></router-link>
-        <router-link to="/porductsList"><li>藥品補給</li></router-link>
-        <router-link to="/porductsList"><li>生活道具</li></router-link>
-        <router-link to="/porductsList"><li>購物商城</li></router-link>
+        <router-link to="/categories"><li>最新商品</li></router-link>
+        <router-link to="/categories"><li>精靈球</li></router-link>
+        <router-link to="/categories"><li>藥品補給</li></router-link>
+        <router-link to="/categories"><li>生活道具</li></router-link>
+        <router-link to="/categories"><li>購物商城</li></router-link>
       </ul>
     </div>
   </div>

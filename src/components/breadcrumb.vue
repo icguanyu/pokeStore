@@ -1,6 +1,6 @@
 <template>
   <ul>
-    <li><router-link to="/">Home　/　</router-link></li>
+    <li><router-link to="/">首頁　/　</router-link></li>
     <li v-if="categories">{{categories}}　/　</li>
     <li v-if="productTitle">{{productTitle}}</li>
   </ul>

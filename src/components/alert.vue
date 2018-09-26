@@ -27,6 +27,7 @@ export default {
   padding: 20px 0;
   background: #f8e55c;
   z-index: 100;
+  opacity: 0;
   transform: translateY(-120%);
   transition: all .3s;
   p{
@@ -44,6 +45,7 @@ export default {
   }
 }
 .showalert{
+  opacity: 1;
   transform: translateY(0%);
 }
 @media screen and (max-width: 640px) {
