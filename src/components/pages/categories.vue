@@ -4,36 +4,37 @@
     <loading v-if="isLoading" ></loading>
     <navbar :cart="cart" :status="status" @signout="signout"></navbar>
     <slide></slide>
+    <breadcrumb :categories="categories"></breadcrumb>
     <div class="products_box">
       <div class="categories">
         <div class="items">
-          <div class="item">
+          <div class="item" @click="categories='所有商品';getProducts()">
             <img src="../../assets/img/products/1.png" alt="">
-            <p class="item_name">精選商品</p>
+            <p class="item_name">所有商品</p>
           </div>
-          <div class="item">
+          <div class="item" @click="categories='精靈球';getProducts()">
             <img src="../../assets/img/products/2.png" alt="">
             <p class="item_name">精靈球</p>
           </div>
-          <div class="item">
+          <div class="item" @click="categories='藥品';getProducts()">
             <img src="../../assets/img/products/8.png" alt="">
-            <p class="item_name">藥品補給</p>
+            <p class="item_name">藥品</p>
           </div>
-          <div class="item">
+          <div class="item" @click="categories='道具';getProducts()">
             <img src="../../assets/img/products/21.png" alt="">
-            <p class="item_name">野外求生道具</p>
+            <p class="item_name">道具</p>
           </div>
-          <div class="item">
+          <div class="item" @click="categories='商城';getProducts()">
             <img src="../../assets/img/products/26.png" alt="">
-            <p class="item_name">精選組合包</p>
+            <p class="item_name">商城</p>
           </div>
         </div>
     
       </div>
       <div class="products_list">
-        <div class="categories_titel">精選產品</div>
+        <div class="categories_titel">{{categories}}</div>
         <div class="list">
-          <div class="item" v-for="item in products" :key="item.id">
+          <div class="item" v-for="item in filterData" :key="item.id">
             <div class="bgimg" :style="{backgroundImage: `url(${item.imageUrl})`}"></div>
             <div class="card-body">
               <span class="category">{{item.category}}</span>
@@ -52,6 +53,7 @@
             </div>
           </div>
         </div>
+        <Pagination :pages="pagination" @emitPages="getProducts" v-if="pagination"></Pagination>
       </div>
       <!--頁碼-->
     </div>
@@ -62,17 +64,21 @@
 
 <script>
 import navbar from '@/components/navbar'
+import breadcrumb from '@/components/breadcrumb'
 import car from '@/components/car'
 import slide from '@/components/slide'
 import loading from "@/components/loading";
 import alert from "@/components/alert";
 import bottom from '@/components/bottom'
+import Pagination from '@/components/Pagination'
 export default {
-  name: "Home",
+  name: "categories",
   data(){
     return{
       products: [],
       product: [],
+      categories:'所有商品',
+      pagination:{},
       cart:{
         carts:[]
       },
@@ -85,20 +91,28 @@ export default {
     }
   },
   components:{
+    breadcrumb,
     bottom,
     navbar,
     slide,
     car,
     loading,
-    alert
+    alert,
+    Pagination
   },
   methods:{ 
     getProducts(page = 1) {
       const vm = this;
-      const api = `${process.env.APIPATH}/api/${process.env.CUSTOMPATH}/products?page=${page}`;
+      let api
+      if(vm.categories=='所有商品'){
+        api = `${process.env.APIPATH}/api/${process.env.CUSTOMPATH}/products?page=${page}`;
+      }else{
+        api = `${process.env.APIPATH}/api/${process.env.CUSTOMPATH}/products/all`;
+      }
       vm.isLoading = true
       this.$http.get(api).then(function(response) {
         vm.products = response.data.products;
+        vm.pagination = response.data.pagination
         vm.isLoading = false
       });
     },
@@ -149,6 +163,19 @@ export default {
       });
     },
   },
+  computed: {
+    filterData(){
+      const vm = this
+      
+      return vm.products.filter((item)=>{
+        if(vm.categories==='所有商品'){
+          return item
+        }else{
+          return item.category === vm.categories
+        }
+      })
+    }
+  },
   created(){
     this.getProducts()
   }
@@ -176,7 +203,7 @@ export default {
 }
 .categories_titel{
   position: relative;
-  font-size: 24px;
+  font-size: 20px;
   font-weight: 600;
   color: #53acac;
   margin-bottom: 10px;
@@ -288,7 +315,7 @@ export default {
   }
 }
 .cardaction{
-  display: inline;
+  display: inline-block;
   opacity: 0;
   width: 100%;
   height: 100%;

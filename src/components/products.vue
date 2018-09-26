@@ -4,23 +4,23 @@
     <p class="categories_titel">商品分類</p>
     <div class="categories">
       <div class="items">
-        <router-link class="item" to="/porductsList">
+        <router-link class="item" to="/categories">
           <img src="../assets/img/products/1.png" alt="">
           <p class="item_name">精選商品</p>
         </router-link>
-        <router-link class="item" to="/porductsList">
+        <router-link class="item" to="/categories">
           <img src="../assets/img/products/2.png" alt="">
           <p class="item_name">精靈球</p>
         </router-link>
-        <router-link class="item" to="/porductsList">
+        <router-link class="item" to="/categories">
           <img src="../assets/img/products/8.png" alt="">
           <p class="item_name">藥品補給</p>
         </router-link>
-        <router-link class="item" to="/porductsList">
+        <router-link class="item" to="/categories">
           <img src="../assets/img/products/21.png" alt="">
           <p class="item_name">野外求生道具</p>
         </router-link>
-        <router-link class="item" to="/porductsList">
+        <router-link class="item" to="/categories">
           <img src="../assets/img/products/26.png" alt="">
           <p class="item_name">精選組合包</p>
         </router-link>

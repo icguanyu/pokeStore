@@ -3,7 +3,7 @@ import Router from 'vue-router'
 import Home from '@/components/pages/home'
 import Checkout from '@/components/pages/checkout'
 import Comfirm from '@/components/pages/comfirm'
-import porductsList from '@/components/pages/porductsList'
+import categories from '@/components/pages/categories'
 //前台
 import Signin from '@/components/pages/signin'
 //後台
@@ -26,9 +26,9 @@ export default new Router({
       component: Home
     },
     {
-      path: '/porductsList',
-      name: 'porductsList',
-      component: porductsList,
+      path: '/categories',
+      name: 'categories',
+      component: categories,
     },
     {
       path: '/checkout',
