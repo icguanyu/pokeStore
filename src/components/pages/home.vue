@@ -1,7 +1,6 @@
 <template>
   <div class="topSlide">
     <alert :alert="alert" @closealert="closealert"></alert>
-    <loading v-if="isLoading" ></loading>
     <navbar :cart="cart" :status="status" @signout="signout"></navbar>
     <slide></slide>
     <h1>＂冒險者！歡迎來到神奇寶貝購物中心＂</h1>
@@ -19,7 +18,6 @@ import navbar from '@/components/navbar'
 import slide from '@/components/slide'
 import car from '@/components/car'
 import products from '@/components/products'
-import loading from "@/components/loading";
 import alert from "@/components/alert";
 import bottom from '@/components/bottom'
 export default {
@@ -29,7 +27,6 @@ export default {
       cart:{
         carts:[]
       },
-      isLoading: false,
       alert: {
         boolen: false,
         title: ''
@@ -43,17 +40,17 @@ export default {
     slide,
     car,
     products,
-    loading,
     alert
   },
   methods:{
     getCart(){
       const vm = this;
       const api = `${process.env.APIPATH}/api/${process.env.CUSTOMPATH}/cart`;
-      vm.isLoading = true
+      vm.$store.dispatch('updateLoading',true)
+      //透過dispatch操作actions的方法
       this.$http.get(api).then(function(response) {
         vm.cart = response.data.data
-        vm.isLoading = false
+        vm.$store.dispatch('updateLoading',false)
       });
     },
     addtoCart(id,title,qty = 1){
@@ -63,12 +60,12 @@ export default {
         product_id:id,
         qty
       }
-      vm.isLoading = true
+      vm.$store.dispatch('updateLoading',true)
       this.$http.post(api,{data: cart}).then(function(response) {
         //console.log(response)
         vm.getCart()
         vm.showalert(title)
-        vm.isLoading = false
+        vm.$store.dispatch('updateLoading',false)
       });
     },
     showalert(title){
@@ -85,11 +82,11 @@ export default {
     signout(){
       const vm = this
       const api = `${process.env.APIPATH}/logout`
-      vm.isLoading = true
+      vm.$store.dispatch('updateLoading',true)
       this.$http.post(api).then((res)=>{
         if(res.data.success){
           vm.$router.push('/signin')
-          vm.isLoading = false
+          vm.$store.dispatch('updateLoading',false)
         }
       });
     },

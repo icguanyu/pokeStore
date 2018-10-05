@@ -1,6 +1,5 @@
 <template>
   <div>
-    <loading v-if="isLoading"></loading> 
     <div class="inner_car">
       <h1>我的購物車</h1>
       <div class="anibox">
@@ -55,16 +54,11 @@
 
 <script>
 import $ from "jquery";
-import loading from "@/components/loading";
 export default {
   name: "car",
   props: ['cart'],
-  components:{
-    loading
-  },
   data(){
     return{
-      isLoading: false,
       coupon_code:'',
     }
   },
@@ -91,12 +85,17 @@ export default {
       const coupon = {
         code:  vm.coupon_code
       }
-      vm.isLoading = true
+      vm.$store.dispatch('updateLoading',true)
       this.$http.post(api,{data:coupon}).then(function(response) {
         // console.log(response)
         vm.getCart()
-        vm.isLoading = false
+        vm.$store.dispatch('updateLoading',false)
       });
+    }
+  },
+  computed:{
+    isLoading(){
+      return this.$store.state.isLoading
     }
   },
   created(){

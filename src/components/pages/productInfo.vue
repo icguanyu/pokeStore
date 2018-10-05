@@ -1,7 +1,6 @@
 <template>
   <div class="products_info">
     <alert :alert="alert" :counts="counts" @closealert="closealert"></alert>
-    <loading v-if="isLoading" ></loading>
     <navbar :cart="cart" :status="status" @signout="signout"></navbar>
     <breadcrumb :categories="product.category" :productTitle="product.title"></breadcrumb>
     <div class="products_box">
@@ -47,7 +46,6 @@
 import navbar from '@/components/navbar'
 import breadcrumb from '@/components/breadcrumb'
 import car from '@/components/car'
-import loading from "@/components/loading";
 import alert from "@/components/alert";
 import bottom from '@/components/bottom'
 export default {
@@ -60,7 +58,6 @@ export default {
       cart:{
         carts:[]
       },
-      isLoading: false,
       alert: {
         boolen: false,
         title: ''
@@ -73,18 +70,17 @@ export default {
     bottom,
     navbar,
     car,
-    loading,
     alert,
   },
   methods:{ 
     getProduct(){
       const vm = this;
       const api = `${process.env.APIPATH}/api/${process.env.CUSTOMPATH}/product/${vm.productId}`;
-      vm.isLoading = true
+      vm.$store.dispatch('updateLoading',true)
       this.$http.get(api).then(function(response) {
         if(response.data.success){ 
           vm.product = response.data.product
-          vm.isLoading = false
+          vm.$store.dispatch('updateLoading',false)
         }else{
           console.log(response.data.message)
         }
@@ -93,10 +89,10 @@ export default {
     getCart(){
       const vm = this;
       const api = `${process.env.APIPATH}/api/${process.env.CUSTOMPATH}/cart`;
-      vm.isLoading = true
+      vm.$store.dispatch('updateLoading',true)
       this.$http.get(api).then(function(response) {
         vm.cart = response.data.data
-        vm.isLoading = false
+        vm.$store.dispatch('updateLoading',false)
       });
     },
     addtoCart(id,title, qty = 1){
@@ -107,11 +103,11 @@ export default {
         product_id:id,
         qty
       }
-      vm.isLoading = true
+      vm.$store.dispatch('updateLoading',true)
       this.$http.post(api,{data: cart}).then(function(response) {
         vm.showalert(title)
         vm.getCart()
-        vm.isLoading = false
+        vm.$store.dispatch('updateLoading',false)
       });
       
     },
@@ -129,14 +125,19 @@ export default {
     signout(){
       const vm = this
       const api = `${process.env.APIPATH}/logout`
-      vm.isLoading = true
+      vm.$store.dispatch('updateLoading',true)
       this.$http.post(api).then((res)=>{
         if(res.data.success){
           vm.$router.push('/signin')
-          vm.isLoading = false
+          vm.$store.dispatch('updateLoading',false)
         }
       });
     },
+  },
+  computed:{
+    isLoading(){
+      return this.$store.state.isLoading
+    }
   },
   created(){
     this.productId =  this.$route.params.productId
