@@ -1,8 +1,6 @@
 <template>
   <div>
-    <alert :alert="alert"></alert>
-    <loading v-if="isLoading"></loading>
-    <navbar :cart="cart"></navbar>
+    <navbar></navbar>
     <div class="checkout">
       <div class="title">
         <img src="../../assets/img/products/2.png" alt="">
@@ -91,17 +89,11 @@
 
 <script>
 import navbar from "@/components/navbar";
-import loading from "@/components/loading";
-import alert from "@/components/alert";
 import bottom from '@/components/bottom';
 export default {
   name: "Home",
   data() {
     return {
-      cart: {
-        carts: []
-      },
-      isLoading: false,
       coupon_code:'',
       orderId:'',
       order:{
@@ -115,18 +107,12 @@ export default {
           address:'',
         },
         message:''
-      },
-      alert: {
-        boolen: false,
-        title: '訂單已送出！'
-      },
+      }
     };
   },
   components: {
     bottom,
-    navbar,
-    loading,
-    alert
+    navbar
   },
   methods: {
     createOrder() {
@@ -134,7 +120,7 @@ export default {
       const api = `${process.env.APIPATH}/api/${process.env.CUSTOMPATH}/order`;
       this.$validator.validate().then(result => {
         if (result) {
-          vm.isLoading = true
+          this.$store.dispatch('updateLoading',true)
           this.$http.post(api,{data:vm.form}).then(function(response) {
             if(response.data.success){
               vm.showalert()
@@ -142,36 +128,29 @@ export default {
                 vm.$router.push(`/comfirm/${response.data.orderId}`)
               },3000)
             }
-            vm.isLoading = false
+            this.$store.dispatch('updateLoading',false)
           });
         }else{
           console.log('欄位不完整')
         }
       });
     },
-    showalert(){
-      const vm = this
-      vm.alert.boolen = true
-      setTimeout(()=>{
-        vm.alert.boolen = false
-      },3000)
+    getCart(){
+      this.$store.dispatch('getCart')
     },
-    getCart() {
-      const vm = this;
-      const api = `${process.env.APIPATH}/api/${process.env.CUSTOMPATH}/cart`;
-      vm.isLoading = true;
-      this.$http.get(api).then(function(response) {
-        vm.cart = response.data.data;
-        vm.isLoading = false;
-      });
+    showalert(title){
+      let alertinfo = {
+        boolean: true,
+        title:'訂單已送出！'
+      }
+      this.$store.dispatch('showalert',alertinfo)
     },
     removeCartItem(id){
       const vm = this;
       const api = `${process.env.APIPATH}/api/${process.env.CUSTOMPATH}/cart/${id}`;
-      vm.isLoading = true;
+      this.$store.dispatch('updateLoading',true)
       this.$http.delete(api).then(function(response) {
         vm.getCart()
-        vm.isLoading = false;
       });
     },
     addCouponCode(){
@@ -180,16 +159,20 @@ export default {
       const coupon = {
         code:  vm.coupon_code
       }
-      vm.isLoading = true
+      this.$store.dispatch('updateLoading',true)
       this.$http.post(api,{data:coupon}).then(function(response) {
         // console.log(response)
         vm.getCart()
-        vm.isLoading = false
       });
     },
   },
+  computed:{
+    cart(){
+      return this.$store.state.cart
+    }
+  },
   created() {
-    this.getCart();
+    this.getCart()
   }
 };
 </script>

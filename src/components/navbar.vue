@@ -51,7 +51,7 @@ export default {
   name: "navbar",
   data(){
     return{
-      status:false
+      //status:false
     }
   },
   methods: {
@@ -64,30 +64,28 @@ export default {
         $('.mobile_menu').removeClass('active')
       })
     },
-    check(){
+    signout(){
       const vm = this
-      const api = `${process.env.APIPATH}/api/user/check`;
-      this.$http.post(api).then(res => {
-        // console.log(res.data);
-        if (res.data.success) {
-          //由伺服器判斷是否登入
-          vm.status = true
-        } else {
-          vm.status = false
+      const api = `${process.env.APIPATH}/logout`
+      vm.$store.dispatch('updateLoading',true)
+      this.$http.post(api).then((res)=>{
+        if(res.data.success){
+          vm.$router.push('/signin')
+          vm.$store.dispatch('updateLoading',false)
         }
       });
     },
-    signout(){
-      this.$emit('signout')
-    }
   },
   computed:{
     cart(){
       return this.$store.state.cart
+    },
+    status(){
+      return this.$store.state.status
     }
   },
   created(){
-    this.check()
+    this.$store.dispatch('check')
   }
 };
 </script>

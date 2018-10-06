@@ -1,8 +1,6 @@
 <template>
   <div>
-    <alert :alert="alert"></alert>
-    <navbar :cart="cart"></navbar>
-    <loading v-if="isLoading"></loading>
+    <navbar></navbar>
     <div class="checkout">
       <div class="title">
         <p v-if="!order.is_paid">確認訂單</p>
@@ -78,75 +76,52 @@
 
 <script>
 import navbar from "@/components/navbar";
-import loading from "@/components/loading";
-import alert from "@/components/alert";
 import bottom from '@/components/bottom'
 export default {
   name: "custom_order",
   data() {
     return {
-      cart: {
-        carts: []
-      },
       orderId:'',
       order:{
         user:{}
-      },
-      isLoading: false,
-      alert: {
-        boolen: false,
-        title: '完成付款！感謝您的體驗！'
       },
     };
   },
   components: {
     bottom,
     navbar,
-    loading,
-    alert
   },
   methods: {
     payOrder(){
       const vm = this;
       const api = `${process.env.APIPATH}/api/${process.env.CUSTOMPATH}/pay/${vm.orderId}`;
-      vm.isLoading = true
+      vm.$store.dispatch('updateLoading',true)
       this.$http.post(api).then(function(response) {
         vm.getOrder()
         vm.showalert()
-        vm.isLoading = false
+        vm.$store.dispatch('updateLoading',false)
       });
     },
-    showalert(){
-      const vm = this
-      vm.alert.boolen = true
-      setTimeout(()=>{
-        vm.alert.boolen = false
-      },5000)
+    showalert(title){
+      let alertinfo = {
+        boolean: true,
+        title:'完成付款！感謝您的體驗！'
+      }
+      this.$store.dispatch('showalert',alertinfo)
     },
     getOrder(){
       //-LMrvJ22ENrY71xGnJKN
       const vm = this;
       const api = `${process.env.APIPATH}/api/${process.env.CUSTOMPATH}/order/${vm.orderId}`;
-      vm.isLoading = true
+      vm.$store.dispatch('updateLoading',true)
       this.$http.get(api).then(function(response) {
         vm.order = response.data.order
-        vm.isLoading = false
-        
+        vm.$store.dispatch('updateLoading',false)
       });
-    },
-    getCart() {
-      const vm = this;
-      const api = `${process.env.APIPATH}/api/${process.env.CUSTOMPATH}/cart`;
-      vm.isLoading = true;
-      this.$http.get(api).then(function(response) {
-        vm.cart = response.data.data;
-        vm.isLoading = false;
-      });
-    },
+    }
   },
   created(){
     this.orderId =  this.$route.params.orderId
-    this.getCart()
     this.getOrder()
   }
 };

@@ -1,5 +1,6 @@
 <template>
   <div id="app">
+    <alert></alert>
     <loading v-if="isLoading" ></loading>
     <router-view/>
   </div>
@@ -7,10 +8,13 @@
 <script>
 
 import loading from "@/components/loading";
+import alert from "@/components/alert";
+
 export default {
   name: "App",
   components:{
     loading,
+    alert
   },
   computed:{
     isLoading(){

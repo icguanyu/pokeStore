@@ -1,7 +1,6 @@
 <template>
   <div class="products_info">
-    <alert :alert="alert" :counts="counts" @closealert="closealert"></alert>
-    <navbar :cart="cart" :status="status" @signout="signout"></navbar>
+    <navbar></navbar>
     <breadcrumb :categories="product.category" :productTitle="product.title"></breadcrumb>
     <div class="products_box">
       <div class="left">
@@ -37,7 +36,7 @@
         </div>
       </div>
     </div>
-    <car :cart="cart" @getCart="getCart"></car>
+    <car></car>
     <bottom></bottom>
   </div>
 </template>
@@ -46,7 +45,6 @@
 import navbar from '@/components/navbar'
 import breadcrumb from '@/components/breadcrumb'
 import car from '@/components/car'
-import alert from "@/components/alert";
 import bottom from '@/components/bottom'
 export default {
   name: "categories",
@@ -55,14 +53,7 @@ export default {
       productId:'',
       product: [],
       counts:0,
-      cart:{
-        carts:[]
-      },
-      alert: {
-        boolen: false,
-        title: ''
-      },
-      status: false,//登入狀態
+      //status: false,//登入狀態
     }
   },
   components:{
@@ -70,7 +61,6 @@ export default {
     bottom,
     navbar,
     car,
-    alert,
   },
   methods:{ 
     getProduct(){
@@ -87,13 +77,7 @@ export default {
       });
     },
     getCart(){
-      const vm = this;
-      const api = `${process.env.APIPATH}/api/${process.env.CUSTOMPATH}/cart`;
-      vm.$store.dispatch('updateLoading',true)
-      this.$http.get(api).then(function(response) {
-        vm.cart = response.data.data
-        vm.$store.dispatch('updateLoading',false)
-      });
+      this.$store.dispatch('getCart')
     },
     addtoCart(id,title, qty = 1){
       const vm = this;
@@ -112,32 +96,30 @@ export default {
       
     },
     showalert(title){
-      const vm = this
-      vm.alert.boolen = true
-      vm.alert.title = `已將「${title} X${vm.counts}${vm.product.unit}」加入購物車`
-      setTimeout(()=>{
-        vm.alert.boolen = false
-      },3000)
+      let alertinfo = {
+        boolean: true,
+        title:`已將「${title} x ${this.counts} ${this.product.unit}」加入購物車`
+      }
+      this.$store.dispatch('showalert',alertinfo)
     },
     closealert(){
-      this.alert = false
+      let alertinfo = {
+        boolean: false,
+        title:''
+      }
+      this.$store.dispatch('closealert',alertinfo)
     },
-    signout(){
-      const vm = this
-      const api = `${process.env.APIPATH}/logout`
-      vm.$store.dispatch('updateLoading',true)
-      this.$http.post(api).then((res)=>{
-        if(res.data.success){
-          vm.$router.push('/signin')
-          vm.$store.dispatch('updateLoading',false)
-        }
-      });
-    },
-  },
-  computed:{
-    isLoading(){
-      return this.$store.state.isLoading
-    }
+    // signout(){
+    //   const vm = this
+    //   const api = `${process.env.APIPATH}/logout`
+    //   vm.$store.dispatch('updateLoading',true)
+    //   this.$http.post(api).then((res)=>{
+    //     if(res.data.success){
+    //       vm.$router.push('/signin')
+    //       vm.$store.dispatch('updateLoading',false)
+    //     }
+    //   });
+    // },
   },
   created(){
     this.productId =  this.$route.params.productId

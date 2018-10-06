@@ -1,6 +1,5 @@
 <template>
   <div class="productsbox">
-    <loading v-if="isLoading" ></loading>
     <div class="text-right">
       <button class="btn btn-primary" @click="openModel(true)">建立新的產品</button>
     </div>
@@ -158,11 +157,9 @@
 <script>
 import $ from "jquery";
 import Pagination from '@/components/Pagination'
-import loading from "@/components/loading"
 export default {
   components:{
     Pagination,
-    loading
   },
   data() {
     return {
@@ -170,7 +167,6 @@ export default {
       pagination:{},
       tempProduct: {},
       isNew: false,
-      isLoading: false,
       status:{
         fileuploading: false
       }
@@ -180,12 +176,12 @@ export default {
     getPorducts(page = 1) {
       const vm = this;
       const api = `${process.env.APIPATH}/api/${process.env.CUSTOMPATH}/products?page=${page}`;
-      vm.isLoading = true
+      vm.$store.dispatch('updateLoading',true)
       this.$http.get(api).then(function(response) {
         //console.log(response.data)
         vm.products = response.data.products;
         vm.pagination = response.data.pagination
-        vm.isLoading = false
+        vm.$store.dispatch('updateLoading',false)
       });
     },
     openModel(isNew, item) {

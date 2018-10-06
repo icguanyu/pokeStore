@@ -1,7 +1,6 @@
 <template>
   <div class="topSlide">
-    <alert :alert="alert" @closealert="closealert"></alert>
-    <navbar :cart="cart" :status="status" @signout="signout"></navbar>
+    <navbar></navbar>
     <slide></slide>
     <breadcrumb :categories="categories"></breadcrumb>
     <div class="products_box">
@@ -57,7 +56,7 @@
       </div>
       <!--頁碼-->
     </div>
-    <car :cart="cart" @getCart="getCart"></car>
+    <car></car>
     <bottom></bottom>
   </div>
 </template>
@@ -67,8 +66,6 @@ import navbar from '@/components/navbar'
 import breadcrumb from '@/components/breadcrumb'
 import car from '@/components/car'
 import slide from '@/components/slide'
-import loading from "@/components/loading";
-import alert from "@/components/alert";
 import bottom from '@/components/bottom'
 import Pagination from '@/components/Pagination'
 export default {
@@ -79,14 +76,7 @@ export default {
       product: [],
       categories:'所有商品',
       pagination:{},
-      cart:{
-        carts:[]
-      },
-      alert: {
-        boolen: false,
-        title: ''
-      },
-      status: false,//登入狀態
+      //status: false,//登入狀態
     }
   },
   components:{
@@ -95,7 +85,6 @@ export default {
     navbar,
     slide,
     car,
-    alert,
     Pagination
   },
   methods:{ 
@@ -115,13 +104,7 @@ export default {
       });
     },
     getCart(){
-      const vm = this;
-      const api = `${process.env.APIPATH}/api/${process.env.CUSTOMPATH}/cart`;
-      vm.$store.dispatch('updateLoading',true)
-      this.$http.get(api).then(function(response) {
-        vm.cart = response.data.data
-        vm.$store.dispatch('updateLoading',false)
-      });
+      this.$store.dispatch('getCart')
     },
     addtoCart(id,title, qty = 1){
       const vm = this;
@@ -139,32 +122,23 @@ export default {
       
     },
     showalert(title){
-      const vm = this
-      vm.alert.boolen = true
-      vm.alert.title = `已將「${title}」加入購物車`
-      setTimeout(()=>{
-        vm.alert.boolen = false
-      },3000)
+      let alertinfo = {
+        boolean: true,
+        title:`已將「${title} x 1」加入購物車`
+      }
+      this.$store.dispatch('showalert',alertinfo)
     },
     closealert(){
-      this.alert = false
-    },
-    signout(){
-      const vm = this
-      const api = `${process.env.APIPATH}/logout`
-      vm.$store.dispatch('updateLoading',true)
-      this.$http.post(api).then((res)=>{
-        if(res.data.success){
-          vm.$router.push('/signin')
-          vm.$store.dispatch('updateLoading',false)
-        }
-      });
-    },
+      let alertinfo = {
+        boolean: false,
+        title:''
+      }
+      this.$store.dispatch('closealert',alertinfo)
+    }
   },
   computed: {
     filterData(){
       const vm = this
-      
       return vm.products.filter((item)=>{
         if(vm.categories==='所有商品'){
           return item

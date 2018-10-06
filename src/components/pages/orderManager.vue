@@ -1,6 +1,5 @@
 <template>
   <div class="orderbox">
-    <loading v-if="isLoading" ></loading>
     <table class="table">
       <thead>
         <tr>
@@ -40,28 +39,25 @@
 <script>
 
 import Pagination from '../Pagination' 
-import loading from "@/components/loading";
 export default {
   components:{
     Pagination,
-    loading
   },
   data() {
     return {
       orders: [],
       pagination:{},
-      isLoading: false,
     }
   },
   methods: {
     getOrders(page = 1) {
       const vm = this;
       const api = `${process.env.APIPATH}/api/${process.env.CUSTOMPATH}/orders?page=${page}`;
-      vm.isLoading = true
+      vm.$store.dispatch('updateLoading',true)
       this.$http.get(api).then(function(response) {
         vm.orders = response.data.orders;
         vm.pagination = response.data.pagination
-        vm.isLoading = false
+        vm.$store.dispatch('updateLoading',false)
       });
     },
     openDeleteModel(item){

@@ -1,5 +1,5 @@
 <template>
-  <div class="alert" :class="{showalert:alert.boolen}">
+  <div class="alert" :class="{showalert:alert.boolean}">
     <p>{{alert.title}}<i class="far fa-times-circle" @click="closealert"></i></p>
   </div>
 </template>
@@ -8,11 +8,15 @@
 import $ from "jquery";
 
 export default {
-  props: ['alert'],
   name: "alert",
   methods:{
     closealert(){
-      this.$emit('closealert')
+      this.$store.dispatch('closealert',false)
+    }
+  },
+  computed:{
+    alert(){
+      return this.$store.state.alert
     }
   }
 };

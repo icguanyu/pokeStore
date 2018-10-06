@@ -1,7 +1,6 @@
 <template>
   <div class="topSlide">
-    <alert :alert="alert" @closealert="closealert"></alert>
-    <navbar :status="status" @signout="signout"></navbar>
+    <navbar></navbar>
     <slide></slide>
     <h1>＂冒險者！歡迎來到神奇寶貝購物中心＂</h1>
     <div class="news">
@@ -18,17 +17,12 @@ import navbar from '@/components/navbar'
 import slide from '@/components/slide'
 import car from '@/components/car'
 import products from '@/components/products'
-import alert from "@/components/alert";
 import bottom from '@/components/bottom'
 export default {
   name: "Home",
   data(){
     return{
-      alert: {
-        boolen: false,
-        title: ''
-      },
-      status: false,
+      //status: false,
     }
   },
   components:{
@@ -37,7 +31,6 @@ export default {
     slide,
     car,
     products,
-    alert
   },
   methods:{
     getCart(){
@@ -59,26 +52,17 @@ export default {
       });
     },
     showalert(title){
-      const vm = this
-      vm.alert.boolen = true
-      vm.alert.title = `已將「${title}」加入購物車`
-      setTimeout(()=>{
-        vm.alert.boolen = false
-      },3000)
+      let alertinfo = {
+        boolean: true,
+        title:`已將「${title} x1 」 加入購物車`
+      }
+      this.$store.dispatch('showalert',alertinfo)
     },
     closealert(){
-      this.alert = false
-    },
-    signout(){
-      const vm = this
-      const api = `${process.env.APIPATH}/logout`
-      vm.$store.dispatch('updateLoading',true)
-      this.$http.post(api).then((res)=>{
-        if(res.data.success){
-          vm.$router.push('/signin')
-          vm.$store.dispatch('updateLoading',false)
-        }
-      });
+      let alertinfo = {
+        boolean: false
+      }
+      this.$store.dispatch('closealert',false)
     },
   },
   created(){
