@@ -54,7 +54,6 @@ export default {
       status:false
     }
   },
-  props: ['cart'],
   methods: {
     toggle(e) {
       $('.hamburgur').children().toggleClass("nav_open");
@@ -80,6 +79,11 @@ export default {
     },
     signout(){
       this.$emit('signout')
+    }
+  },
+  computed:{
+    cart(){
+      return this.$store.state.cart
     }
   },
   created(){

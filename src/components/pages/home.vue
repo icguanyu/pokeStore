@@ -1,14 +1,14 @@
 <template>
   <div class="topSlide">
     <alert :alert="alert" @closealert="closealert"></alert>
-    <navbar :cart="cart" :status="status" @signout="signout"></navbar>
+    <navbar :status="status" @signout="signout"></navbar>
     <slide></slide>
     <h1>＂冒險者！歡迎來到神奇寶貝購物中心＂</h1>
     <div class="news">
       <p>2018.09.21<span class="class emergency">緊急</span>因真新鎮受超夢大軍侵襲，暫時停止營業，不便之處，敬請見諒。</p>
     </div>
     <products @addtoCart="addtoCart"></products>
-    <car :cart="cart" @getCart="getCart"></car>
+    <car></car>
     <bottom></bottom>
   </div>
 </template>
@@ -24,9 +24,6 @@ export default {
   name: "Home",
   data(){
     return{
-      cart:{
-        carts:[]
-      },
       alert: {
         boolen: false,
         title: ''
@@ -44,14 +41,7 @@ export default {
   },
   methods:{
     getCart(){
-      const vm = this;
-      const api = `${process.env.APIPATH}/api/${process.env.CUSTOMPATH}/cart`;
-      vm.$store.dispatch('updateLoading',true)
-      //透過dispatch操作actions的方法
-      this.$http.get(api).then(function(response) {
-        vm.cart = response.data.data
-        vm.$store.dispatch('updateLoading',false)
-      });
+      this.$store.dispatch('getCart')
     },
     addtoCart(id,title,qty = 1){
       const vm = this;

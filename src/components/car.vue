@@ -56,7 +56,6 @@
 import $ from "jquery";
 export default {
   name: "car",
-  props: ['cart'],
   data(){
     return{
       coupon_code:'',
@@ -77,7 +76,7 @@ export default {
       });
     },
     getCart() {
-      this.$emit('getCart');
+      this.$store.dispatch('getCart')
     },
     addCouponCode(){
       const vm = this;
@@ -96,6 +95,9 @@ export default {
   computed:{
     isLoading(){
       return this.$store.state.isLoading
+    },
+    cart(){
+      return this.$store.state.cart
     }
   },
   created(){
