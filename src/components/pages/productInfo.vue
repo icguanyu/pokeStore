@@ -63,7 +63,7 @@ export default {
     car,
   },
   methods:{ 
-    getProduct(){
+    getProduct(){//取得單一產品
       const vm = this;
       const api = `${process.env.APIPATH}/api/${process.env.CUSTOMPATH}/product/${vm.productId}`;
       vm.$store.dispatch('updateLoading',true)
@@ -79,28 +79,12 @@ export default {
     getCart(){
       this.$store.dispatch('getCart')
     },
-    addtoCart(id,title, qty = 1){
-      const vm = this;
-      if(!vm.counts) return
-      const api = `${process.env.APIPATH}/api/${process.env.CUSTOMPATH}/cart`;
-      const cart = {
-        product_id:id,
-        qty
-      }
-      vm.$store.dispatch('updateLoading',true)
-      this.$http.post(api,{data: cart}).then(function(response) {
-        vm.showalert(title)
-        vm.getCart()
-        vm.$store.dispatch('updateLoading',false)
-      });
-      
-    },
-    showalert(title){
+    addtoCart(id,title,qty=1){
       let alertinfo = {
-        boolean: true,
-        title:`已將「${title} x ${this.counts} ${this.product.unit}」加入購物車`
-      }
-      this.$store.dispatch('showalert',alertinfo)
+          boolean: true,
+          title:`已將「${title} x ${this.counts} ${this.product.unit}」加入購物車`
+        }
+      this.$store.dispatch('addtoCart',{id,alertinfo,qty})
     },
     closealert(){
       let alertinfo = {

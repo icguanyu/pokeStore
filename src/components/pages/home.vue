@@ -6,7 +6,7 @@
     <div class="news">
       <p>2018.09.21<span class="class emergency">緊急</span>因真新鎮受超夢大軍侵襲，暫時停止營業，不便之處，敬請見諒。</p>
     </div>
-    <products @addtoCart="addtoCart"></products>
+    <products></products>
     <car></car>
     <bottom></bottom>
   </div>
@@ -30,28 +30,6 @@ export default {
   methods:{
     getCart(){
       this.$store.dispatch('getCart')
-    },
-    addtoCart(id,title,qty = 1){
-      const vm = this;
-      const api = `${process.env.APIPATH}/api/${process.env.CUSTOMPATH}/cart`;
-      const cart = {
-        product_id:id,
-        qty
-      }
-      vm.$store.dispatch('updateLoading',true)
-      this.$http.post(api,{data: cart}).then(function(response) {
-        //console.log(response)
-        vm.getCart()
-        vm.showalert(title)
-        vm.$store.dispatch('updateLoading',false)
-      });
-    },
-    showalert(title){
-      let alertinfo = {
-        boolean: true,
-        title:`已將「${title} x1 」 加入購物車`
-      }
-      this.$store.dispatch('showalert',alertinfo)
     },
     closealert(){
       let alertinfo = {

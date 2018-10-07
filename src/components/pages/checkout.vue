@@ -10,7 +10,7 @@
       <div class="cartlist" v-else>
         <div class="action">
           <input type="text" placeholder="請輸入優惠碼 試試abc?" v-model="coupon_code">
-          <button @click="addCouponCode">套用優惠碼</button>
+          <button @click="addCouponCode(coupon_code)">套用優惠碼</button>
           <button>想要優惠碼?</button>
         </div>
         <table>
@@ -146,24 +146,10 @@ export default {
       this.$store.dispatch('showalert',alertinfo)
     },
     removeCartItem(id){
-      const vm = this;
-      const api = `${process.env.APIPATH}/api/${process.env.CUSTOMPATH}/cart/${id}`;
-      this.$store.dispatch('updateLoading',true)
-      this.$http.delete(api).then(function(response) {
-        vm.getCart()
-      });
+      this.$store.dispatch('removeCartItem',id)
     },
-    addCouponCode(){
-      const vm = this;
-      const api = `${process.env.APIPATH}/api/${process.env.CUSTOMPATH}/coupon`;
-      const coupon = {
-        code:  vm.coupon_code
-      }
-      this.$store.dispatch('updateLoading',true)
-      this.$http.post(api,{data:coupon}).then(function(response) {
-        // console.log(response)
-        vm.getCart()
-      });
+    addCouponCode(coupon_code){
+      this.$store.dispatch('addCouponCode',coupon_code)
     },
   },
   computed:{

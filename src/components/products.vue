@@ -95,11 +95,15 @@ export default {
   methods:{
     getPorducts(page = 1) {
       let api = `${process.env.APIPATH}/api/${process.env.CUSTOMPATH}/products?page=${page}`
-      this.$store.dispatch('getProduct',api)
+      this.$store.dispatch('getProducts',api)
     },
-    addtoCart(id,title) {
-      this.$emit('addtoCart', id,title);
-    }
+    addtoCart(id,title,qty=1){
+      let alertinfo = {
+          boolean: true,
+          title:`已將「${title} x1 」 加入購物車`
+        }
+      this.$store.dispatch('addtoCart',{id,alertinfo,qty})
+    },
   },
   created(){
     this.getPorducts()

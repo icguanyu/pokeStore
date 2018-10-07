@@ -11,28 +11,28 @@
           <router-link to="/checkout"><li class="cart" v-if="!status">購物車({{cart.carts.length}})</li></router-link>
           <router-link to="/admin"><li class="sign" v-if="status">進入後台</li></router-link>
         </ul>
-        <div class="hamburgur" @click="toggle">
-          <div class="nav_icon"></div>
+        <div class="hamburgur" @click.stop="hamburger=!hamburger;mm=!mm">
+          <div class="nav_icon" :class="{'nav_open':hamburger}"></div>
         </div>
       </div>
     </div>
     <div class="main_menu">
       <ul>
-        <router-link to="/categories"><li>最新商品</li></router-link>
+        <router-link to="/"><li>回首頁</li></router-link>
         <router-link to="/categories"><li>精靈球</li></router-link>
         <router-link to="/categories"><li>藥品補給</li></router-link>
         <router-link to="/categories"><li>生活道具</li></router-link>
         <router-link to="/categories"><li>購物商城</li></router-link>
       </ul>
     </div>
-    <div class="mobile_menu">
+    <div class="mobile_menu" :class="{'active':mm}"  @click.stop="hamburger=!hamburger;mm=!mm">
       <ul class="option">
         <router-link to="/admin"><li class="sign" v-if="status">進入後台管理</li></router-link>
         <router-link to="/signin"><li class="sign" v-if="!status">登入/註冊</li></router-link>
         <li class="sign" v-if="status" @click="signout">登出！</li>
       </ul>
       <ul class="menu">
-        <router-link to="/categories"><li>最新商品</li></router-link>
+        <router-link to="/"><li>回首頁</li></router-link>
         <router-link to="/categories"><li>精靈球</li></router-link>
         <router-link to="/categories"><li>藥品補給</li></router-link>
         <router-link to="/categories"><li>生活道具</li></router-link>
@@ -51,19 +51,12 @@ export default {
   name: "navbar",
   data(){
     return{
+      hamburger: false,
+      mm:false, //mobile_menu
       //status:false
     }
   },
   methods: {
-    toggle(e) {
-      $('.hamburgur').children().toggleClass("nav_open");
-      $('.mobile_menu').toggleClass('active')
-      e.stopPropagation()
-      $(document).on('click', function() {
-        $('.hamburgur').children().removeClass('nav_open')
-        $('.mobile_menu').removeClass('active')
-      })
-    },
     signout(){
       const vm = this
       const api = `${process.env.APIPATH}/logout`

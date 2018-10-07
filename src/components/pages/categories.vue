@@ -6,23 +6,23 @@
     <div class="products_box">
       <div class="categories">
         <div class="items">
-          <div class="item" @click="categories='所有商品';getProduct()">
+          <div class="item" @click="categories='所有商品';getProducts()">
             <img src="../../assets/img/products/1.png" alt="">
             <p class="item_name">所有商品</p>
           </div>
-          <div class="item" @click="categories='精靈球';getProduct()">
+          <div class="item" @click="categories='精靈球';getProducts()">
             <img src="../../assets/img/products/2.png" alt="">
             <p class="item_name">精靈球</p>
           </div>
-          <div class="item" @click="categories='藥品';getProduct()">
+          <div class="item" @click="categories='藥品';getProducts()">
             <img src="../../assets/img/products/8.png" alt="">
             <p class="item_name">藥品</p>
           </div>
-          <div class="item" @click="categories='道具';getProduct()">
+          <div class="item" @click="categories='道具';getProducts()">
             <img src="../../assets/img/products/21.png" alt="">
             <p class="item_name">道具</p>
           </div>
-          <div class="item" @click="categories='商城';getProduct()">
+          <div class="item" @click="categories='商城';getProducts()">
             <img src="../../assets/img/products/26.png" alt="">
             <p class="item_name">商城</p>
           </div>
@@ -72,7 +72,6 @@ export default {
   name: "categories",
   data(){
     return{
-      product: [],
       categories:'所有商品',
     }
   },
@@ -85,36 +84,21 @@ export default {
     Pagination
   },
   methods:{ 
-    getProduct(page = 1) {
+    getProducts(page = 1) {
       let api = this.categories=='所有商品'
         ?`${process.env.APIPATH}/api/${process.env.CUSTOMPATH}/products?page=${page}`
         :`${process.env.APIPATH}/api/${process.env.CUSTOMPATH}/products/all`
-      this.$store.dispatch('getProduct',api)
+      this.$store.dispatch('getProducts',api)
     },
     getCart(){
       this.$store.dispatch('getCart')
     },
-    addtoCart(id,title, qty = 1){
-      const vm = this;
-      const api = `${process.env.APIPATH}/api/${process.env.CUSTOMPATH}/cart`;
-      const cart = {
-        product_id:id,
-        qty
-      }
-      vm.$store.dispatch('updateLoading',true)
-      this.$http.post(api,{data: cart}).then(function(response) {
-        vm.showalert(title)
-        vm.getCart()
-        vm.$store.dispatch('updateLoading',false)
-      });
-      
-    },
-    showalert(title){
+    addtoCart(id,title,qty=1){
       let alertinfo = {
-        boolean: true,
-        title:`已將「${title} x 1」加入購物車`
-      }
-      this.$store.dispatch('showalert',alertinfo)
+          boolean: true,
+          title:`已將「${title} x1 」 加入購物車`
+        }
+      this.$store.dispatch('addtoCart',{id,alertinfo,qty})
     },
     closealert(){
       let alertinfo = {
@@ -140,7 +124,7 @@ export default {
     }
   },
   created(){
-    this.getProduct()
+    this.getProducts()
   }
 };
 </script>

@@ -38,7 +38,7 @@
       </div>
       <div class="cupcon">
         <input type="text" placeholder="請輸入優惠碼" v-model="coupon_code">
-        <button @click="addCouponCode">套用優惠碼</button>
+        <button @click="addCouponCode(coupon_code)">套用優惠碼</button>
       </div>
       <div class="action">
         <button @click="hideCart">再逛逛</button>
@@ -69,27 +69,13 @@ export default {
       $('.inner_car').removeClass('showCart')
     },
     removeCartItem(id){
-      const vm = this;
-      const api = `${process.env.APIPATH}/api/${process.env.CUSTOMPATH}/cart/${id}`;
-      this.$http.delete(api).then(function(response) {
-        vm.getCart()
-      });
+      this.$store.dispatch('removeCartItem',id)
     },
     getCart() {
       this.$store.dispatch('getCart')
     },
-    addCouponCode(){
-      const vm = this;
-      const api = `${process.env.APIPATH}/api/${process.env.CUSTOMPATH}/coupon`;
-      const coupon = {
-        code:  vm.coupon_code
-      }
-      vm.$store.dispatch('updateLoading',true)
-      this.$http.post(api,{data:coupon}).then(function(response) {
-        // console.log(response)
-        vm.getCart()
-        vm.$store.dispatch('updateLoading',false)
-      });
+    addCouponCode(coupon_code){
+      this.$store.dispatch('addCouponCode',coupon_code)
     }
   },
   computed:{

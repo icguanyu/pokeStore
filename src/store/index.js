@@ -52,7 +52,7 @@ export default new Vuex.Store({
         }
       });
     },
-    getProduct(context,payload){//payload(page)
+    getProducts(context,payload){//payload(page)
       const api = payload
       context.commit('LOADING',true)
       axios.get(api).then(function(response) {
@@ -61,16 +61,37 @@ export default new Vuex.Store({
         context.commit('LOADING',false)
       });
     },
-    addCart(context,payload){
+    addtoCart(context,{id,alertinfo,qty}){
       const api = `${process.env.APIPATH}/api/${process.env.CUSTOMPATH}/cart`;
+      const cart = {
+        product_id:id,
+        qty
+      }
       context.commit('LOADING',true)
-      axios.post(api,{data: payload}).then(function(response) {
-        //this.getCart()
-        this.dispatch('getCart')
-        context.commit('ALERT',payload.title)
+      axios.post(api,{data: cart}).then(function(response) {
+        //vm.showalert(title)
+        context.dispatch('getCart')
+        context.dispatch('showalert',alertinfo)
         context.commit('LOADING',false)
       });
-    }
+    },
+    removeCartItem(context,id){
+      const api = `${process.env.APIPATH}/api/${process.env.CUSTOMPATH}/cart/${id}`;
+      context.commit('LOADING',true)
+      axios.delete(api).then(function(response) {
+        context.dispatch('getCart')
+      });
+    },
+    addCouponCode(context, coupon){
+      const api = `${process.env.APIPATH}/api/${process.env.CUSTOMPATH}/coupon`;
+      const cupcondata = {
+        code : coupon
+      }
+      axios.post(api,{data:cupcondata}).then(function(response) {
+        context.dispatch('getCart')
+      });
+    },
+
   },
   mutations:{
     LOADING(state, status){
