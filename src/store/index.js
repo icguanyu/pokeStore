@@ -14,7 +14,9 @@ export default new Vuex.Store({
     alert:{
       boolean: false,
       title: ''
-    }
+    },
+    products:[],
+    pagination:{},
   },
   actions:{ //state = payload(載荷)
     updateLoading(context,status){
@@ -49,6 +51,25 @@ export default new Vuex.Store({
           context.commit('STATUS',false)
         }
       });
+    },
+    getProduct(context,payload){//payload(page)
+      const api = payload
+      context.commit('LOADING',true)
+      axios.get(api).then(function(response) {
+        context.commit('PRODUCTS',response.data.products)
+        context.commit('PAGINATION',response.data.pagination)
+        context.commit('LOADING',false)
+      });
+    },
+    addCart(context,payload){
+      const api = `${process.env.APIPATH}/api/${process.env.CUSTOMPATH}/cart`;
+      context.commit('LOADING',true)
+      axios.post(api,{data: payload}).then(function(response) {
+        //this.getCart()
+        this.dispatch('getCart')
+        context.commit('ALERT',payload.title)
+        context.commit('LOADING',false)
+      });
     }
   },
   mutations:{
@@ -64,6 +85,12 @@ export default new Vuex.Store({
     },
     STATUS(state, payload){
       state.status = payload
+    },
+    PRODUCTS(state, payload){
+      state.products = payload
+    },
+    PAGINATION(state, payload){
+      state.pagination = payload
     }
   }
 })

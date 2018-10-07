@@ -1,6 +1,5 @@
 <template>
   <div>
-    <loading v-if="isLoading"></loading>
     <p class="categories_titel">商品分類</p>
     <div class="categories">
       <div class="items">
@@ -59,9 +58,6 @@ import $ from "jquery";
 import "swiper/dist/css/swiper.css"; // require styles
 import { swiper, swiperSlide } from "vue-awesome-swiper";
 
-
-import loading from "@/components/loading";
-
 export default {
   name: "products",
   data() {
@@ -92,24 +88,14 @@ export default {
           }
         }
       },
-      isLoading: false,
-      products: [],
-      pagination:{},
       tempProduct: {},
       screenWidth: document.body.clientWidth
     }
   },
   methods:{
     getPorducts(page = 1) {
-      const vm = this;
-      const api = `${process.env.APIPATH}/api/${process.env.CUSTOMPATH}/products?page=${page}`;
-      vm.isLoading = true
-      this.$http.get(api).then(function(response) {
-        //console.log(response.data)
-        vm.products = response.data.products;
-        vm.pagination = response.data.pagination
-        vm.isLoading = false
-      });
+      let api = `${process.env.APIPATH}/api/${process.env.CUSTOMPATH}/products?page=${page}`
+      this.$store.dispatch('getProduct',api)
     },
     addtoCart(id,title) {
       this.$emit('addtoCart', id,title);
@@ -124,10 +110,15 @@ export default {
       return vm.products.filter((item)=>{
         return item.category === '2017'
       })
+    },
+    products(){
+      return this.$store.state.products
+    },
+    pagination(){
+      return this.$store.state.pagination
     }
   },
   components: {
-    loading,
     swiper,
     swiperSlide
   }

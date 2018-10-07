@@ -6,23 +6,23 @@
     <div class="products_box">
       <div class="categories">
         <div class="items">
-          <div class="item" @click="categories='所有商品';getProducts()">
+          <div class="item" @click="categories='所有商品';getProduct()">
             <img src="../../assets/img/products/1.png" alt="">
             <p class="item_name">所有商品</p>
           </div>
-          <div class="item" @click="categories='精靈球';getProducts()">
+          <div class="item" @click="categories='精靈球';getProduct()">
             <img src="../../assets/img/products/2.png" alt="">
             <p class="item_name">精靈球</p>
           </div>
-          <div class="item" @click="categories='藥品';getProducts()">
+          <div class="item" @click="categories='藥品';getProduct()">
             <img src="../../assets/img/products/8.png" alt="">
             <p class="item_name">藥品</p>
           </div>
-          <div class="item" @click="categories='道具';getProducts()">
+          <div class="item" @click="categories='道具';getProduct()">
             <img src="../../assets/img/products/21.png" alt="">
             <p class="item_name">道具</p>
           </div>
-          <div class="item" @click="categories='商城';getProducts()">
+          <div class="item" @click="categories='商城';getProduct()">
             <img src="../../assets/img/products/26.png" alt="">
             <p class="item_name">商城</p>
           </div>
@@ -52,7 +52,7 @@
             </div>
           </div>
         </div>
-        <Pagination :pages="pagination" @emitPages="getProducts" v-if="pagination"></Pagination>
+        <Pagination></Pagination>
       </div>
       <!--頁碼-->
     </div>
@@ -72,11 +72,8 @@ export default {
   name: "categories",
   data(){
     return{
-      products: [],
       product: [],
       categories:'所有商品',
-      pagination:{},
-      //status: false,//登入狀態
     }
   },
   components:{
@@ -88,20 +85,11 @@ export default {
     Pagination
   },
   methods:{ 
-    getProducts(page = 1) {
-      const vm = this;
-      let api
-      if(vm.categories=='所有商品'){
-        api = `${process.env.APIPATH}/api/${process.env.CUSTOMPATH}/products?page=${page}`;
-      }else{
-        api = `${process.env.APIPATH}/api/${process.env.CUSTOMPATH}/products/all`;
-      }
-      vm.$store.dispatch('updateLoading',true)
-      this.$http.get(api).then(function(response) {
-        vm.products = response.data.products;
-        vm.pagination = response.data.pagination
-        vm.$store.dispatch('updateLoading',false)
-      });
+    getProduct(page = 1) {
+      let api = this.categories=='所有商品'
+        ?`${process.env.APIPATH}/api/${process.env.CUSTOMPATH}/products?page=${page}`
+        :`${process.env.APIPATH}/api/${process.env.CUSTOMPATH}/products/all`
+      this.$store.dispatch('getProduct',api)
     },
     getCart(){
       this.$store.dispatch('getCart')
@@ -146,10 +134,13 @@ export default {
           return item.category === vm.categories
         }
       })
+    },
+    products(){
+      return this.$store.state.products
     }
   },
   created(){
-    this.getProducts()
+    this.getProduct()
   }
 };
 </script>

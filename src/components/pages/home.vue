@@ -20,11 +20,6 @@ import products from '@/components/products'
 import bottom from '@/components/bottom'
 export default {
   name: "Home",
-  data(){
-    return{
-      //status: false,
-    }
-  },
   components:{
     bottom,
     navbar,

@@ -130,7 +130,8 @@ export default {
   height: 600px;
   padding: 15px;
   background: #fff;
-  border: 1px solid #999;
+  border: 1px solid #ddd;
+  border-radius: 3px;
   transition: all .5s;
   h1 {
     text-align: center;
