@@ -42,6 +42,7 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex';
 import navbar from '@/components/navbar'
 import breadcrumb from '@/components/breadcrumb'
 import car from '@/components/car'
@@ -92,18 +93,7 @@ export default {
         title:''
       }
       this.$store.dispatch('closealert',alertinfo)
-    },
-    // signout(){
-    //   const vm = this
-    //   const api = `${process.env.APIPATH}/logout`
-    //   vm.$store.dispatch('updateLoading',true)
-    //   this.$http.post(api).then((res)=>{
-    //     if(res.data.success){
-    //       vm.$router.push('/signin')
-    //       vm.$store.dispatch('updateLoading',false)
-    //     }
-    //   });
-    // },
+    }
   },
   created(){
     this.productId =  this.$route.params.productId

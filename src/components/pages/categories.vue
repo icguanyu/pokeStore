@@ -62,6 +62,7 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex';
 import navbar from '@/components/navbar'
 import breadcrumb from '@/components/breadcrumb'
 import car from '@/components/car'
@@ -119,9 +120,7 @@ export default {
         }
       })
     },
-    products(){
-      return this.$store.state.products
-    }
+    ...mapGetters(['products'])
   },
   created(){
     this.getProducts()

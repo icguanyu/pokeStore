@@ -5,8 +5,7 @@
 </template>
 
 <script>
-import $ from "jquery";
-
+import { mapGetters } from 'vuex';
 export default {
   name: "alert",
   methods:{
@@ -15,9 +14,7 @@ export default {
     }
   },
   computed:{
-    alert(){
-      return this.$store.state.alert
-    }
+    ...mapGetters(['alert'])
   }
 };
 </script>

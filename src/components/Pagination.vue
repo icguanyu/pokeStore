@@ -28,6 +28,7 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex';
 export default {
   name: 'Navbar',
   methods:{
@@ -37,9 +38,7 @@ export default {
     }
   },
   computed:{
-    pagination(){
-      return this.$store.state.pagination
-    }
+    ...mapGetters(['pagination'])
   }
 }
 </script>

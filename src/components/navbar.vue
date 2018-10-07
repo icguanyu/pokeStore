@@ -44,9 +44,7 @@
 </template>
 
 <script>
-import $ from "jquery";
-//手機選單
-
+import { mapGetters } from 'vuex';
 export default {
   name: "navbar",
   data(){
@@ -70,12 +68,7 @@ export default {
     },
   },
   computed:{
-    cart(){
-      return this.$store.state.cart
-    },
-    status(){
-      return this.$store.state.status
-    }
+    ...mapGetters(['cart','status'])
   },
   created(){
     this.$store.dispatch('check')

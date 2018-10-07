@@ -1,9 +1,9 @@
 import Vue from 'vue'
-import Vuex from 'Vuex'
+import vuex from 'vuex'
 import axios from 'axios'
-Vue.use(Vuex)
+Vue.use(vuex)
 
-export default new Vuex.Store({
+export default new vuex.Store({
   strict: true,
   state: {
     status: false,//預設登入狀態
@@ -113,5 +113,13 @@ export default new Vuex.Store({
     PAGINATION(state, payload){
       state.pagination = payload
     }
+  },
+  getters:{
+    status:state=>{ return state.status },
+    isLoading:state=>{ return state.isLoading },
+    cart:state=>{ return state.cart },
+    alert:state=>{ return state.alert },
+    products:state=>{ return state.products },
+    pagination:state=>{ return state.pagination }
   }
 })

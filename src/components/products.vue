@@ -53,13 +53,16 @@
 </template>
 
 <script>
-
-import $ from "jquery";
+import { mapGetters } from 'vuex';
 import "swiper/dist/css/swiper.css"; // require styles
 import { swiper, swiperSlide } from "vue-awesome-swiper";
 
 export default {
   name: "products",
+  components: {
+    swiper,
+    swiperSlide
+  },
   data() {
     return {
       swiperOption: {
@@ -109,22 +112,7 @@ export default {
     this.getPorducts()
   },
   computed:{
-    starProduct(){
-      const vm = this
-      return vm.products.filter((item)=>{
-        return item.category === '2017'
-      })
-    },
-    products(){
-      return this.$store.state.products
-    },
-    pagination(){
-      return this.$store.state.pagination
-    }
-  },
-  components: {
-    swiper,
-    swiperSlide
+    ...mapGetters(['products','pagination'])
   }
 };
 </script>

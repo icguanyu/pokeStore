@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="inner_car">
+    <div class="inner_car" :class="{'showCart':show}">
       <h1>我的購物車</h1>
       <div class="anibox">
         <div class="home">
@@ -41,11 +41,11 @@
         <button @click="addCouponCode(coupon_code)">套用優惠碼</button>
       </div>
       <div class="action">
-        <button @click="hideCart">再逛逛</button>
+        <button @click="show=!show">再逛逛</button>
         <router-link to="/checkout"><button>結帳去</button></router-link>
       </div>
     </div>
-    <div class="car" @click="showCart">
+    <div class="car" @click="show=!show">
         <p>{{cart.carts.length}}</p>
     </div>
 </div>
@@ -53,38 +53,20 @@
 </template>
 
 <script>
-import $ from "jquery";
+import { mapGetters,mapActions } from 'vuex';
 export default {
   name: "car",
   data(){
     return{
+      show: false,
       coupon_code:'',
     }
   },
   methods:{
-    showCart(){
-      $('.inner_car').toggleClass('showCart')
-    },
-    hideCart(){
-      $('.inner_car').removeClass('showCart')
-    },
-    removeCartItem(id){
-      this.$store.dispatch('removeCartItem',id)
-    },
-    getCart() {
-      this.$store.dispatch('getCart')
-    },
-    addCouponCode(coupon_code){
-      this.$store.dispatch('addCouponCode',coupon_code)
-    }
+    ...mapActions(['getCart','addCouponCode','removeCartItem'])
   },
   computed:{
-    isLoading(){
-      return this.$store.state.isLoading
-    },
-    cart(){
-      return this.$store.state.cart
-    }
+    ...mapGetters(['isLoading','cart'])
   },
   created(){
     this.getCart()

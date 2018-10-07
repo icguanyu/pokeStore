@@ -88,6 +88,7 @@
 </template>
 
 <script>
+import { mapGetters , mapActions } from 'vuex';
 import navbar from "@/components/navbar";
 import bottom from '@/components/bottom';
 export default {
@@ -135,9 +136,6 @@ export default {
         }
       });
     },
-    getCart(){
-      this.$store.dispatch('getCart')
-    },
     showalert(title){
       let alertinfo = {
         boolean: true,
@@ -145,17 +143,10 @@ export default {
       }
       this.$store.dispatch('showalert',alertinfo)
     },
-    removeCartItem(id){
-      this.$store.dispatch('removeCartItem',id)
-    },
-    addCouponCode(coupon_code){
-      this.$store.dispatch('addCouponCode',coupon_code)
-    },
+    ...mapActions(['getCart','removeCartItem','addCouponCode'])
   },
   computed:{
-    cart(){
-      return this.$store.state.cart
-    }
+    ...mapGetters(['cart'])
   },
   created() {
     this.getCart()
