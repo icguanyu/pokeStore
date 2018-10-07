@@ -119,17 +119,17 @@ export default {
     createOrder() {
       const vm = this;
       const api = `${process.env.APIPATH}/api/${process.env.CUSTOMPATH}/order`;
-      this.$validator.validate().then(result => {
+      vm.$validator.validate().then(result => {
         if (result) {
-          this.$store.dispatch('updateLoading',true)
-          this.$http.post(api,{data:vm.form}).then(function(response) {
+          vm.$store.dispatch('updateLoading',true)
+          vm.$http.post(api,{data:vm.form}).then(function(response) {
             if(response.data.success){
               vm.showalert()
               setTimeout(()=>{
                 vm.$router.push(`/comfirm/${response.data.orderId}`)
               },3000)
             }
-            this.$store.dispatch('updateLoading',false)
+            vm.$store.dispatch('updateLoading',false)
           });
         }else{
           console.log('欄位不完整')
