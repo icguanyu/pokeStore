@@ -1,6 +1,6 @@
 module.exports = {
   lintOnSave: false,
-  baseUrl: 'pokeStore3.0/dist',
+  baseUrl: 'pokeStore/dist',
   outputDir: undefined,
   assetsDir: undefined,
   runtimeCompiler: undefined,
