@@ -33,7 +33,7 @@ export default {
   name: 'Navbar',
   methods:{
     updatePage(page) {
-      let api = `${process.env.APIPATH}/api/${process.env.CUSTOMPATH}/products?page=${page}`
+      let api = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/products?page=${page}`
       this.$store.dispatch('getProducts',api)
     }
   },

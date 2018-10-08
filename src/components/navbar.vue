@@ -57,7 +57,7 @@ export default {
   methods: {
     signout(){
       const vm = this
-      const api = `${process.env.APIPATH}/logout`
+      const api = `${process.env.VUE_APP_APIPATH}/logout`
       vm.$store.dispatch('updateLoading',true)
       this.$http.post(api).then((res)=>{
         if(res.data.success){

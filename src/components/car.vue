@@ -87,8 +87,9 @@ export default {
     cursor: pointer;
   }
 }
-@include scrollbars(5px, #fd3b3b, transparent);
+
 .inner_car {
+  @include scrollbars(5px, #fd3b3b, transparent);
   position: fixed;
   z-index: 10;
   top: 50%;

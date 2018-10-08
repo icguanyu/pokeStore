@@ -1,62 +1,52 @@
-// The Vue build version to load with the `import` command
-// (runtime-only or standalone) has been set in webpack.base.conf with an alias.
 import Vue from 'vue'
-import vuex from 'vuex'
-import App from './App'
+import App from './App.vue'
 import router from './router'
+import store from './store'
+
+import vuex from 'vuex'
 import axios from 'axios'
 import VueAxios from 'vue-axios'
 import VeeValidate from 'vee-validate'
-import attributesTW from 'vee-validate/dist/locale/zh_TW.js';
-import store from './store'
-
-import 'bootstrap'
-Vue.use(vuex)
-
-Vue.use(VueAxios, axios)
-Vue.config.productionTip = false
-
-axios.defaults.withCredentials = true;
-
-Vue.use(VeeValidate);
-VeeValidate.Validator.localize('zh_TW',attributesTW)
-/* eslint-disable no-new */
-
-
+import attributesTW from 'vee-validate/dist/locale/zh_TW.js'
 import currencyFilter from './filters/currency'
 import dateFilter from './filters/date'
 import textlength from './filters/textlength'
+import 'bootstrap'
 
-Vue.filter('currency',currencyFilter)
-Vue.filter('dateFilter',dateFilter)
-Vue.filter('textlength',textlength)
+Vue.use(vuex)
+Vue.use(VueAxios, axios)
+Vue.use(VeeValidate)
+
+VeeValidate.Validator.localize('zh_TW', attributesTW)
+
+Vue.filter('currency', currencyFilter)
+Vue.filter('dateFilter', dateFilter)
+Vue.filter('textlength', textlength)
+
+axios.defaults.withCredentials = true
+Vue.config.productionTip = false
 
 new Vue({
-  el: '#app',
   router,
   store,
-  components: { App },
-  template: '<App/>'
-})
+  render: h => h(App)
+}).$mount('#app')
 
 router.beforeEach((to, from, next) => {
   if (to.meta.requiresAuth) {
-    //需要驗證,判斷是否登入
-    const api = `${process.env.APIPATH}/api/user/check`;
+    const api = `${process.env.VUE_APP_APIPATH}/api/user/check`
     axios.post(api).then(res => {
-      console.log(res.data);
+      console.log(res.data)
       if (res.data.success) {
-        //由伺服器判斷是否登入
-        next();
+        next()
       } else {
-        alert("請重新登入");
+        alert('請重新登入')
         next({
-          path: "/signin"
-        });
+          path: '/signin'
+        })
       }
-    });
+    })
   } else {
-    //不需驗證
-    next();
+    next()
   }
-});
+})

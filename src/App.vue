@@ -6,10 +6,8 @@
   </div>
 </template>
 <script>
-
 import loading from "@/components/loading";
 import alert from "@/components/alert";
-
 export default {
   name: "App",
   components:{
@@ -29,5 +27,3 @@ export default {
   width: 100%;
 }
 </style>
-
-
