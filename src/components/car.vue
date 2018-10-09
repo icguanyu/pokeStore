@@ -25,7 +25,7 @@
               <td>{{ item.product.title }}</td>
               <td>{{ item.qty }}/{{ item.product.unit }}</td>
               <td>{{ item.final_total|currency }}</td>
-              <td><i class="far fa-trash-alt" @click="removeCartItem(item.id)"></i></td>
+              <td><i @click="removeCartItem(item.id)">刪除</i></td>
             </tr>
           </tbody>
         </table>
