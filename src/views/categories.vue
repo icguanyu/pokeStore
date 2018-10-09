@@ -68,7 +68,7 @@ import breadcrumb from '@/components/breadcrumb'
 import car from '@/components/car'
 import slide from '@/components/slide'
 import bottom from '@/components/bottom'
-import Pagination from '@/components/pagination'
+import Pagination from '@/components/Pagination'
 export default {
   name: "categories",
   data(){

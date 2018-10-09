@@ -156,7 +156,7 @@
 
 <script>
 import $ from "jquery";
-import Pagination from '@/components/pagination'
+import Pagination from '@/components/Pagination'
 export default {
   components:{
     Pagination,

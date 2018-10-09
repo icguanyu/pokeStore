@@ -38,7 +38,7 @@
 
 <script>
 
-import Pagination from '@/components/pagination' 
+import Pagination from '@/components/Pagination' 
 export default {
   components:{
     Pagination,
