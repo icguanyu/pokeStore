@@ -32,7 +32,7 @@
                 <p>原價：NT{{ item.total|currency }}</p>
                 <span v-if="item.final_total!==item.total">優惠價：NT{{ item.final_total|currency }}</span>
               </td>
-              <td><i class="far fa-trash-alt" @click="removeCartItem(item.id)"></i></td>
+              <td><i @click="removeCartItem(item.id)" class="material-icons">delete_outline</i></td>
             </tr>
           </tbody>
           <tfoot>
